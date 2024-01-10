@@ -6,55 +6,46 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 
-import { TbCubePlus } from "react-icons/tb";
+import { MdFormatListBulletedAdd } from "react-icons/md";
+
 import { PiPencilSimpleLight, PiTrash } from "react-icons/pi";
 
-import styles from "./Products.module.css";
+import styles from "./Categories.module.css";
+
 import { Link } from "react-router-dom";
 
-const Products = () => {
+const Categories = () => {
     return (
         <div>
             <Container>
                 <Row>
-                    <Col md={12} className={styles.add_product_div}>
+                    <Col md={12} className={styles.add_category_div}>
                         <Link
-                            className={styles.add_product_btn}
-                            to='/product/new'
+                            className={styles.add_category_btn}
+                            to='/category/new'
                         >
-                            <TbCubePlus />
+                            <MdFormatListBulletedAdd />
                         </Link>
                     </Col>
                 </Row>
                 <Col md={12} className='mt-3'>
                     <h3 className='mb-4'>
-                        Produtos <strong>Cadastrados</strong>
+                        Categorias <strong>Cadastradas</strong>
                     </h3>
                     <Table>
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Nome</th>
-                                <th>Categoria</th>
-                                <th>Valor</th>
-                                <th>Quantidade</th>
-                                <th>Imagem</th>
+                                <th>Percentual de Imposto</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>1</td>
-                                <td>Pasta de dentes - Colgate</td>
                                 <td>Higiene</td>
-                                <td>R$ 5,99</td>
-                                <td>100</td>
-                                <td>
-                                    <img
-                                        src='https://io.convertiez.com.br/m/superpaguemenos/shop/products/images/13604/medium/creme-dental-colgate-tripla-acao-90g_92465.png'
-                                        alt=''
-                                    />
-                                </td>
+                                <td>05.7 %</td>
                                 <td>
                                     <Button
                                         className={styles.btn_action}
@@ -80,16 +71,8 @@ const Products = () => {
                             </tr>
                             <tr>
                                 <td>2</td>
-                                <td>Macarrão instantaneo Nissin</td>
-                                <td>Alimentos (embalados)</td>
-                                <td>R$ 2,99</td>
-                                <td>74</td>
-                                <td>
-                                    <img
-                                        src='https://img.megaboxatacado.com.br/produto/1000X1000/201873_10836.jpg'
-                                        alt=''
-                                    />
-                                </td>
+                                <td>Limpeza</td>
+                                <td>14.7 %</td>
                                 <td className={styles.btn_action}>
                                     <Button
                                         className={styles.btn_action}
@@ -115,16 +98,8 @@ const Products = () => {
                             </tr>
                             <tr>
                                 <td>3</td>
-                                <td>Maçã Fuji</td>
-                                <td>Alimentos (frutas)</td>
-                                <td>R$ 0,57</td>
-                                <td>300</td>
-                                <td>
-                                    <img
-                                        src='https://domolivio.vtexassets.com/unsafe/fit-in/720x720/center/middle/https%3A%2F%2Fdomolivio.vtexassets.com%2Farquivos%2Fids%2F344080%2FMaca-Fuji-Kg.jpg%3Fv%3D638388794024500000'
-                                        alt=''
-                                    />
-                                </td>
+                                <td>Alimentos</td>
+                                <td >0.7%</td>
                                 <td className={styles.btn_action}>
                                     <Button
                                         className={styles.btn_action}
@@ -156,4 +131,4 @@ const Products = () => {
     );
 };
 
-export default Products;
+export default Categories;

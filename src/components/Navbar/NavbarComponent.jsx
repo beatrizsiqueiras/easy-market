@@ -12,9 +12,10 @@ import {
     PiShoppingBagOpenThin,
     PiShoppingCartSimpleLight,
     PiUserCircleGearThin,
+    PiListBulletsThin,
 } from "react-icons/pi";
-import { TfiMoney } from "react-icons/tfi";
 
+import { TfiMoney } from "react-icons/tfi";
 import styles from "./NavbarComponent.module.css";
 import { NavLink } from "react-router-dom";
 
@@ -62,6 +63,14 @@ function NavbarComponent() {
                                                 className={styles.nav_icon}
                                             />
                                             Produtos
+                                        </NavLink>
+                                    </Nav.Link>
+                                    <Nav.Link href='#action1'>
+                                        <NavLink to='/categories'>
+                                            <PiListBulletsThin 
+                                                className={styles.nav_icon}
+                                            />
+                                            Categorias
                                         </NavLink>
                                     </Nav.Link>
                                     <Nav.Link href='#action1'>

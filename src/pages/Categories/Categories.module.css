@@ -1,4 +1,4 @@
-.add_product_btn {
+.add_category_btn {
     color: #FFF;
     background-color: #8fb339;
     border: 0;
@@ -11,7 +11,7 @@
     justify-content: center;
 }
 
-.add_product_div {
+.add_category_div {
     display: flex;
     justify-content: end;
 }
