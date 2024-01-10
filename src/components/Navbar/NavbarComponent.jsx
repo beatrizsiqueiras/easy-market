@@ -57,7 +57,7 @@ function NavbarComponent() {
                                     </Button>
                                 </Form>
                                 <Nav className='justify-content-start flex-grow-1 pe-3'>
-                                    <Nav.Link href='#action1'>
+                                    <Nav.Link>
                                         <NavLink to='/products'>
                                             <PiShoppingBagOpenThin
                                                 className={styles.nav_icon}
@@ -65,21 +65,23 @@ function NavbarComponent() {
                                             Produtos
                                         </NavLink>
                                     </Nav.Link>
-                                    <Nav.Link href='#action1'>
+                                    <Nav.Link>
                                         <NavLink to='/categories'>
-                                            <PiListBulletsThin 
+                                            <PiListBulletsThin
                                                 className={styles.nav_icon}
                                             />
                                             Categorias
                                         </NavLink>
                                     </Nav.Link>
-                                    <Nav.Link href='#action1'>
-                                        <PiShoppingCartSimpleLight
-                                            className={styles.nav_icon}
-                                        />
-                                        Vendas
+                                    <Nav.Link>
+                                        <NavLink to='/sales'>
+                                            <PiShoppingCartSimpleLight
+                                                className={styles.nav_icon}
+                                            />
+                                            Vendas
+                                        </NavLink>
                                     </Nav.Link>
-                                    <Nav.Link href='#action2'>
+                                    <Nav.Link>
                                         <TfiMoney className={styles.nav_icon} />
                                         Financeiro
                                     </Nav.Link>

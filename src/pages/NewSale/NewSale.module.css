@@ -1,0 +1,13 @@
+.products_header {
+    font-weight: bold;
+    border-bottom: 2px solid #CCC;
+}
+
+.products_row {
+    align-items: center;
+}
+
+.products_row img {
+    width: 70px;
+}
+

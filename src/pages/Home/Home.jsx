@@ -21,7 +21,7 @@ const Home = () => {
                     <div className='p-2'>
                         <Row>
                             <Col>
-                                <Link to='/'>
+                                <Link to='/sale/new'>
                                     <Card bg='light' className={styles.card}>
                                         <Card.Body>
                                             <Card.Title

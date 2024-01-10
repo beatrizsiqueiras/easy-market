@@ -11,6 +11,8 @@ import Products from "./pages/Products/Products";
 import NewProduct from "./pages/NewProduct/NewProduct";
 import Categories from "./pages/Categories/Categories";
 import NewCategory from "./pages/NewCategory/NewCategory";
+import Sales from "./pages/Sales/Sales";
+import NewSale from "./pages/NewSale/NewSale";
 
 function App() {
     return (
@@ -33,6 +35,8 @@ function App() {
                             path='/category/new'
                             element={<NewCategory />}
                         ></Route>
+                        <Route path='/sales' element={<Sales />}></Route>
+                        <Route path='/sale/new' element={<NewSale />}></Route>
                     </Routes>
 
                     <Footer />
