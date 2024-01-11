@@ -4,22 +4,28 @@ namespace Http\Controllers;
 
 include(__DIR__ . '/../../Models/Database.php');
 include(__DIR__ . '/../../Models/Product.php');
-include(__DIR__ . '/../../Models/Category.php');
 
-use Models\Category;
 use Models\Product;
-use Models\Database;
 
 class ProductController
 {
     public static function index()
     {
-        var_dump(Category::all());
-        return;
+        return Product::all();
     }
 
-    public function store()
+    public static function store(array $data)
     {
-        return 'store products';
+        return Product::create($data);
+    }
+
+    public static function update(array $dice)
+    {
+        return Product::update($dice);
+    }
+
+    public static function destroy(array $dice)
+    {
+        return Product::delete($dice);
     }
 }
