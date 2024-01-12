@@ -1,16 +1,19 @@
 <?php
-include('../Http/Controllers/CategoryController.php');
+include('../Http/Controllers/UserController.php');
 
-use Http\Controllers\CategoryController;
+use Http\Controllers\UserController;
 
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
 
-        $categories = json_encode(CategoryController::index());
+        if (!UserController::index()) {
+            http_response_code(400);
+            echo "JSON decoding error.";
+            exit;
+        }
         http_response_code(200);
-        echo $categories;
-        return;
+        echo json_encode(UserController::index());
 
         break;
     case 'POST':
@@ -25,9 +28,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
             exit;
         }
 
-        if (CategoryController::store($data)) {
+        if (UserController::store($data)) {
             http_response_code(200);
-            echo json_encode(array('message' => 'New category inserted successfully.'));
+            echo json_encode(array('message' => 'New user inserted successfully.'));
         }
 
         break;
@@ -42,9 +45,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
             exit;
         }
 
-        if (CategoryController::update($data)) {
+        if (UserController::update($data)) {
             http_response_code(200);
-            echo json_encode(array('mensagem' => 'Category updated successfully.'));
+            echo json_encode(array('mensagem' => 'User updated successfully.'));
         }
         http_response_code(200);
 
@@ -60,9 +63,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
             exit;
         }
 
-        if (CategoryController::destroy($data)) {
+        if (UserController::destroy($data)) {
             http_response_code(200);
-            echo json_encode(array('mensagem' => 'Category deleted successfully.'));
+            echo json_encode(array('mensagem' => 'User deleted successfully.'));
         }
         http_response_code(200);
         break;
