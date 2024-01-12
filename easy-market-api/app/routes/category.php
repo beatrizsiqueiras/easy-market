@@ -3,6 +3,7 @@ include('../Http/Controllers/CategoryController.php');
 
 use Http\Controllers\CategoryController;
 
+require(__DIR__ . '/../Http/cors.php');
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':

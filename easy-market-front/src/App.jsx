@@ -13,30 +13,77 @@ import Categories from "./pages/Categories/Categories";
 import NewCategory from "./pages/NewCategory/NewCategory";
 import Sales from "./pages/Sales/Sales";
 import NewSale from "./pages/NewSale/NewSale";
+import Login from "./pages/Login/Login";
+import { useAuthentication } from "./hooks/useAuthentication";
 
 function App() {
+    const [user, setUser] = useState(null);
+    const { auth } = useAuthentication();
+    const loadingUser = user === undefined;
+    // useEffect(() => {
+    //     onAuthStateChanged(auth, (user) => {
+    //         setUser(user);
+    //     });
+    // }, [auth]);
+
+    // if (loadingUser) {
+    //     return <p>Carregando...</p>;
+    // }
     return (
         <div className='App' id='container'>
             <div id='content-wrap'>
                 <BrowserRouter>
                     <NavbarComponent />
                     <Routes>
-                        <Route path='/' element={<Home />}></Route>
-                        <Route path='/products' element={<Products />}></Route>
+                        <Route
+                            path='/'
+                            element={user ? <Home /> : <Navigate to='/login' />}
+                        ></Route>
+                        <Route
+                            path='/products'
+                            element={
+                                user ? <Products /> : <Navigate to='/login' />
+                            }
+                        ></Route>
                         <Route
                             path='/product/new'
-                            element={<NewProduct />}
+                            element={
+                                user ? <NewProduct /> : <Navigate to='/login' />
+                            }
                         ></Route>
                         <Route
                             path='/categories'
-                            element={<Categories />}
+                            element={
+                                user ? <Categories /> : <Navigate to='/login' />
+                            }
                         ></Route>
                         <Route
                             path='/category/new'
-                            element={<NewCategory />}
+                            element={
+                                user ? (
+                                    <NewCategory />
+                                ) : (
+                                    <Navigate to='/login' />
+                                )
+                            }
                         ></Route>
-                        <Route path='/sales' element={<Sales />}></Route>
-                        <Route path='/sale/new' element={<NewSale />}></Route>
+                        <Route
+                            path='/sales'
+                            element={
+                                user ? <Sales /> : <Navigate to='/login' />
+                            }
+                        ></Route>
+                        <Route
+                            path='/sale/new'
+                            element={
+                                user ? <NewSale /> : <Navigate to='/login' />
+                            }
+                        ></Route>
+
+                        <Route
+                            path='/login'
+                            element={!user ? <Login /> : <Navigate to='/' />}
+                        ></Route>
                     </Routes>
 
                     <Footer />

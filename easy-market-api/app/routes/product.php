@@ -1,8 +1,10 @@
 <?php
 include('../Http/Controllers/ProductController.php');
 
+
 use Http\Controllers\ProductController;
 
+require(__DIR__ . '/../Http/cors.php');
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':

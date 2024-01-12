@@ -3,6 +3,7 @@ include('../Http/Controllers/UserController.php');
 
 use Http\Controllers\UserController;
 
+require(__DIR__ . '/../Http/cors.php');
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
@@ -21,7 +22,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $json_data = file_get_contents("php://input");
 
         $data = json_decode($json_data, true);
-
+        var_dump($data);exit;
         if (!$data) {
             http_response_code(400);
             echo "JSON decoding error.";
