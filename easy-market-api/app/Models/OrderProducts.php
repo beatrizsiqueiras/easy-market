@@ -49,9 +49,8 @@ class OrderProducts
             }
             foreach ($data as $orderProduct) {
                 $orderProduct['created_at'] = date('Y-m-d H:i:s', time());
-    
-                $inserted = pg_insert($dbConnection, "order_products", $orderProduct);
 
+                $inserted = pg_insert($dbConnection, "order_products", $orderProduct);
             }
 
             if (!$inserted) {
@@ -69,14 +68,14 @@ class OrderProducts
         }
     }
 
-    public static function update(array $dice)
+    public static function update(array $data)
     {
         try {
 
-            $conditions = $dice['conditions'];
-            $data = $dice['data'];
+            $conditions = $data['conditions'];
+            $attributes = $data['data'];
 
-            $data['updated_at'] = date('Y-m-d H:i:s', time());
+            $attributes['updated_at'] = date('Y-m-d H:i:s', time());
 
             $dbConnection = Database::dbConnection();
 
@@ -85,7 +84,7 @@ class OrderProducts
                 exit;
             }
 
-            $updated = pg_update($dbConnection, 'order_products', $data, $conditions);
+            $updated = pg_update($dbConnection, 'order_products', $attributes, $conditions);
 
             if (!$updated) {
                 echo "An error occurred in query execution.\n";

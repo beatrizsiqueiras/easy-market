@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
-const SalesChart = () => {
+const OrderChart = () => {
     const chartRef = useRef(null);
 
     useEffect(() => {
@@ -20,15 +20,15 @@ const SalesChart = () => {
             { month: "Dez", count: 100 },
         ];
 
-        const salesChart = chartRef.current;
+        const orderChart = chartRef.current;
 
-        if (salesChart) {
+        if (orderChart) {
             // Check if a chart instance already exists and destroy it
-            if (salesChart.chartInstance) {
-                salesChart.chartInstance.destroy();
+            if (orderChart.chartInstance) {
+                orderChart.chartInstance.destroy();
             }
 
-            salesChart.chartInstance = new Chart(salesChart, {
+            orderChart.chartInstance = new Chart(orderChart, {
                 type: "line",
                 data: {
                     labels: data.map((row) => row.month),
@@ -37,7 +37,7 @@ const SalesChart = () => {
                             backgroundColor: "#815ac0",
                             borderCapStyle: "#815ac0",
                             tension: 0.5,
-                            label: "Vendas do ano",
+                            label: "2024",
                             data: data.map((row) => row.count),
                         },
                     ],
@@ -48,9 +48,9 @@ const SalesChart = () => {
 
     return (
         <>
-            <canvas id='salesChart' ref={chartRef}></canvas>
+            <canvas id='orderChart' ref={chartRef}></canvas>
         </>
     );
 };
 
-export default SalesChart;
+export default OrderChart;

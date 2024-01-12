@@ -8,13 +8,17 @@ import Table from "react-bootstrap/Table";
 
 import { MdFormatListBulletedAdd } from "react-icons/md";
 
-import { PiPencilSimpleLight, PiTrash } from "react-icons/pi";
+import { PiTrash } from "react-icons/pi";
 
 import styles from "./Categories.module.css";
 
 import { Link } from "react-router-dom";
 
+import { useFetchCategories } from "../../hooks/useFetchCategories";
+
 const Categories = () => {
+    const { categories } = useFetchCategories();
+
     return (
         <div>
             <Container>
@@ -30,99 +34,38 @@ const Categories = () => {
                 </Row>
                 <Col md={12} className='mt-3'>
                     <h3 className='mb-4'>
-                        Categorias <strong>Cadastradas</strong>
+                        Registered <strong>Products</strong>
                     </h3>
                     <Table>
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Nome</th>
-                                <th>Percentual de Imposto</th>
+                                <th>Name</th>
+                                <th>Tax Percentage</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Higiene</td>
-                                <td>05.7 %</td>
-                                <td>
-                                    <Button
-                                        className={styles.btn_action}
-                                        variant='light'
-                                        style={{
-                                            background: "#4d9078",
-                                            color: "#FFF",
-                                        }}
-                                    >
-                                        <PiPencilSimpleLight />
-                                    </Button>
-                                    <Button
-                                        className={styles.btn_action}
-                                        variant='light'
-                                        style={{
-                                            background: "#f78154 ",
-                                            color: "#FFF",
-                                        }}
-                                    >
-                                        <PiTrash />
-                                    </Button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Limpeza</td>
-                                <td>14.7 %</td>
-                                <td className={styles.btn_action}>
-                                    <Button
-                                        className={styles.btn_action}
-                                        variant='light'
-                                        style={{
-                                            background: "#4d9078",
-                                            color: "#FFF",
-                                        }}
-                                    >
-                                        <PiPencilSimpleLight />
-                                    </Button>
-                                    <Button
-                                        className={styles.btn_action}
-                                        variant='light'
-                                        style={{
-                                            background: "#f78154 ",
-                                            color: "#FFF",
-                                        }}
-                                    >
-                                        <PiTrash />
-                                    </Button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Alimentos</td>
-                                <td >0.7%</td>
-                                <td className={styles.btn_action}>
-                                    <Button
-                                        className={styles.btn_action}
-                                        variant='light'
-                                        style={{
-                                            background: "#4d9078",
-                                            color: "#FFF",
-                                        }}
-                                    >
-                                        <PiPencilSimpleLight />
-                                    </Button>
-                                    <Button
-                                        className={styles.btn_action}
-                                        variant='light'
-                                        style={{
-                                            background: "#f78154 ",
-                                            color: "#FFF",
-                                        }}
-                                    >
-                                        <PiTrash />
-                                    </Button>
-                                </td>
-                            </tr>
+                            {categories &&
+                                categories.map((category) => (
+                                    <tr key={category.id}>
+                                        <td>{category.id}</td>
+                                        <td>{category.name}</td>
+                                        <td>{category.tax_percentage}%</td>
+                                        <td>
+                                            <Button
+                                                className={styles.btn_action}
+                                                variant='light'
+                                                style={{
+                                                    background: "#f78154 ",
+                                                    color: "#FFF",
+                                                }}
+                                            >
+                                                <PiTrash />
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                ))}
                         </tbody>
                     </Table>
                 </Col>

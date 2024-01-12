@@ -8,7 +8,6 @@ date_default_timezone_set('America/Sao_Paulo');
 
 class Product
 {
-
     public static function all()
     {
         try {
@@ -19,7 +18,16 @@ class Product
                 exit;
             }
 
-            $categories = pg_query($dbConnection, "SELECT * FROM product");
+            $sql = " SELECT P.ID,
+                P.NAME AS PRODUCT,
+                P.UNITARY_VALUE,
+                P.AVAILABLE_QUANTITY,
+                C.NAME AS CATEGORY,
+                C.TAX_PERCENTAGE
+            FROM PRODUCT P
+            INNER JOIN CATEGORY C ON C.ID = P.CATEGORY";
+
+            $categories = pg_query($dbConnection, $sql);
 
             if (!$categories) {
                 echo "An error occurred in query execution.\n";
@@ -67,14 +75,14 @@ class Product
         }
     }
 
-    public static function update(array $dice)
+    public static function update(array $data)
     {
         try {
 
-            $conditions = $dice['conditions'];
-            $data = $dice['data'];
+            $conditions = $data['conditions'];
+            $attributes = $data['data'];
 
-            $data['updated_at'] = date('Y-m-d H:i:s', time());
+            $attributes['updated_at'] = date('Y-m-d H:i:s', time());
 
             $dbConnection = Database::dbConnection();
 
@@ -83,7 +91,7 @@ class Product
                 exit;
             }
 
-            $updated = pg_update($dbConnection, 'product', $data, $conditions);
+            $updated = pg_update($dbConnection, 'product', $attributes, $conditions);
 
             if (!$updated) {
                 echo "An error occurred in query execution.\n";

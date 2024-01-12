@@ -7,18 +7,18 @@ import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 
 import { TbShoppingCartPlus } from "react-icons/tb";
-import { PiPencilSimpleLight, PiTrash } from "react-icons/pi";
+import { PiTrash } from "react-icons/pi";
 
-import styles from "./Sales.module.css";
+import styles from "./Order.module.css";
 import { Link } from "react-router-dom";
 
-const Sales = () => {
+const Order = () => {
     return (
         <div>
             <Container>
                 <Row>
-                    <Col md={12} className={styles.add_sales_div}>
-                        <Link className={styles.add_sales_btn} to='/sale/new'>
+                    <Col md={12} className={styles.add_order_div}>
+                        <Link className={styles.add_order_btn} to='/order/new'>
                             <TbShoppingCartPlus />
                         </Link>
                     </Col>
@@ -116,4 +116,4 @@ const Sales = () => {
     );
 };
 
-export default Sales;
+export default Order;

@@ -8,16 +8,17 @@ date_default_timezone_set('America/Sao_Paulo');
 
 class Order
 {
-
     public static function all()
     {
         try {
 
             $dbConnection = Database::dbConnection();
+
             if (!$dbConnection) {
                 echo "An error occurred in custom database connection.\n";
                 exit;
             }
+
             $orders = pg_query($dbConnection, "SELECT * FROM public.order");
 
             if (!$orders) {
@@ -66,14 +67,14 @@ class Order
         }
     }
 
-    public static function update(array $dice)
+    public static function update(array $data)
     {
         try {
 
-            $conditions = $dice['conditions'];
-            $data = $dice['data'];
+            $conditions = $data['conditions'];
+            $attributes = $data['data'];
 
-            $data['updated_at'] = date('Y-m-d H:i:s', time());
+            $attributes['updated_at'] = date('Y-m-d H:i:s', time());
 
             $dbConnection = Database::dbConnection();
 
@@ -82,7 +83,7 @@ class Order
                 exit;
             }
 
-            $updated = pg_update($dbConnection, 'order', $data, $conditions);
+            $updated = pg_update($dbConnection, 'order', $attributes, $conditions);
 
             if (!$updated) {
                 echo "An error occurred in query execution.\n";

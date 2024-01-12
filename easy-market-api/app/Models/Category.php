@@ -8,7 +8,6 @@ date_default_timezone_set('America/Sao_Paulo');
 
 class Category
 {
-
     public static function all()
     {
         try {
@@ -67,12 +66,12 @@ class Category
         }
     }
 
-    public static function update(array $dice)
+    public static function update(array $data)
     {
         try {
 
-            $conditions = $dice['conditions'];
-            $data = $dice['data'];
+            $conditions = $data['conditions'];
+            $attributes = $data['data'];
 
             $data['updated_at'] = date('Y-m-d H:i:s', time());
 
@@ -83,7 +82,7 @@ class Category
                 exit;
             }
 
-            $updated = pg_update($dbConnection, 'category', $data, $conditions);
+            $updated = pg_update($dbConnection, 'category', $attributes, $conditions);
 
             if (!$updated) {
                 echo "An error occurred in query execution.\n";

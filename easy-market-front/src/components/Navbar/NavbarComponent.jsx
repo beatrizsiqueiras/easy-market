@@ -45,24 +45,13 @@ function NavbarComponent() {
                                 </Offcanvas.Title>
                             </Offcanvas.Header>
                             <Offcanvas.Body>
-                                <Form className='d-flex'>
-                                    <Form.Control
-                                        type='search'
-                                        placeholder='Search'
-                                        className='me-2'
-                                        aria-label='Search'
-                                    />
-                                    <Button variant='outline-success'>
-                                        <CiSearch />
-                                    </Button>
-                                </Form>
                                 <Nav className='justify-content-start flex-grow-1 pe-3'>
                                     <Nav.Link>
                                         <NavLink to='/products'>
                                             <PiShoppingBagOpenThin
                                                 className={styles.nav_icon}
                                             />
-                                            Produtos
+                                            Products
                                         </NavLink>
                                     </Nav.Link>
                                     <Nav.Link>
@@ -70,20 +59,16 @@ function NavbarComponent() {
                                             <PiListBulletsThin
                                                 className={styles.nav_icon}
                                             />
-                                            Categorias
+                                            Categories
                                         </NavLink>
                                     </Nav.Link>
                                     <Nav.Link>
-                                        <NavLink to='/sales'>
+                                        <NavLink to='/order'>
                                             <PiShoppingCartSimpleLight
                                                 className={styles.nav_icon}
                                             />
-                                            Vendas
+                                            Orders
                                         </NavLink>
-                                    </Nav.Link>
-                                    <Nav.Link>
-                                        <TfiMoney className={styles.nav_icon} />
-                                        Financeiro
                                     </Nav.Link>
                                     <NavDropdown
                                         title={
@@ -93,13 +78,6 @@ function NavbarComponent() {
                                         }
                                         id={`offcanvasNavbarDropdown-expand-${expand}`}
                                     >
-                                        <NavDropdown.Item href='#action4'>
-                                            Seus dados
-                                        </NavDropdown.Item>
-                                        <NavDropdown.Item href='#action3'>
-                                            Usuários
-                                        </NavDropdown.Item>
-                                        <NavDropdown.Divider />
                                         <NavDropdown.Item href='#action5'>
                                             Sair
                                         </NavDropdown.Item>

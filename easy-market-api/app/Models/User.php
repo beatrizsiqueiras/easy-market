@@ -130,31 +130,4 @@ class User
         }
     }
 
-    public static function login($data)
-    {
-        try {
-            $password = $data['password'];
-            $conditions = array("login" => $data['login']);
-            $dbConnection = Database::dbConnection();
-
-            $user = pg_select($dbConnection, 'user', $conditions)[0];
-            if (!$user) {
-                echo "user-not-found";
-                exit;
-            }
-            if (!password_verify($password, $user['password'])) {
-                echo "wrong-password";
-                exit;
-            }
-            $values = array('token' => base64_encode(random_bytes(32)));
-            pg_update($dbConnection, 'user', $values, $user);
-            return $values;
-        } catch (PDOException $e) {
-            echo "Erro de conexão: " . $e->getMessage();
-        } finally {
-            if ($dbConnection !== null) {
-                pg_close($dbConnection);
-            }
-        }
-    }
 }

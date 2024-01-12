@@ -19,13 +19,13 @@ class ProductController
         return Product::create($data);
     }
 
-    public static function update(array $dice)
+    public static function update(array $data)
     {
-        return Product::update($dice);
+        return Product::update($data);
     }
 
-    public static function destroy(array $dice)
+    public static function destroy(array $data)
     {
-        return Product::delete($dice);
+        return Product::delete($data);
     }
 }

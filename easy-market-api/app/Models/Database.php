@@ -13,14 +13,13 @@ class Database extends PDO
     const DB_NAME = 'easy_market';
 
     private static $database;
-    private static $error;
-
 
     public static function dbConnection()
     {
-        $connection_string = "host=" . self::HOST . " port=" . self::PORT . " dbname=" . self::DB_NAME . " user=" . self::USER . " password=" . self::PASS;
-        
-        self::$database = pg_connect($connection_string);
+        $connect = "host=" . self::HOST . " port=" . self::PORT . " dbname=" . self::DB_NAME . " user=" . self::USER . " password=" . self::PASS;
+
+        self::$database = pg_connect($connect);
+
         return self::$database;
     }
 }

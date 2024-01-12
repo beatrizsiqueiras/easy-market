@@ -1,9 +1,13 @@
 import styles from "./Login.module.css";
 import { useState, useEffect } from "react";
+
+import { AuthProvider } from "../../context/AuthContext";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { useAuthentication } from "../../hooks/useAuthentication";
+import { useNavigate } from "react-router-dom";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -12,8 +16,9 @@ import Container from "react-bootstrap/Container";
 const Login = () => {
     const [userLogin, setUserLogin] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
-    const { loading, login, error } = useAuthentication();
+    const { login, error } = useAuthentication();
 
     const handleSubmitLogin = async (e) => {
         e.preventDefault();
@@ -21,7 +26,7 @@ const Login = () => {
             userLogin,
             password,
         };
-        const logged = await login(userData);
+        await login(userData);
     };
 
     useEffect(() => {

@@ -7,12 +7,16 @@ import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 
 import { TbCubePlus } from "react-icons/tb";
-import { PiPencilSimpleLight, PiTrash } from "react-icons/pi";
+import { PiTrash } from "react-icons/pi";
 
 import styles from "./Products.module.css";
 import { Link } from "react-router-dom";
 
+import { useFetchProducts } from "../../hooks/useFetchProducts";
+
 const Products = () => {
+    const { products } = useFetchProducts();
+
     return (
         <div>
             <Container>
@@ -28,126 +32,43 @@ const Products = () => {
                 </Row>
                 <Col md={12} className='mt-3'>
                     <h3 className='mb-4'>
-                        Produtos <strong>Cadastrados</strong>
+                        Registered <strong>Products</strong>
                     </h3>
                     <Table>
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Nome</th>
-                                <th>Categoria</th>
-                                <th>Valor</th>
-                                <th>Quantidade</th>
-                                <th>Imagem</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Unitary Value</th>
+                                <th>Available Quantity</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Pasta de dentes - Colgate</td>
-                                <td>Higiene</td>
-                                <td>R$ 5,99</td>
-                                <td>100</td>
-                                <td>
-                                    <img
-                                        src='https://io.convertiez.com.br/m/superpaguemenos/shop/products/images/13604/medium/creme-dental-colgate-tripla-acao-90g_92465.png'
-                                        alt=''
-                                    />
-                                </td>
-                                <td>
-                                    <Button
-                                        className={styles.btn_action}
-                                        variant='light'
-                                        style={{
-                                            background: "#4d9078",
-                                            color: "#FFF",
-                                        }}
-                                    >
-                                        <PiPencilSimpleLight />
-                                    </Button>
-                                    <Button
-                                        className={styles.btn_action}
-                                        variant='light'
-                                        style={{
-                                            background: "#f78154 ",
-                                            color: "#FFF",
-                                        }}
-                                    >
-                                        <PiTrash />
-                                    </Button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Macarrão instantaneo Nissin</td>
-                                <td>Alimentos (embalados)</td>
-                                <td>R$ 2,99</td>
-                                <td>74</td>
-                                <td>
-                                    <img
-                                        src='https://img.megaboxatacado.com.br/produto/1000X1000/201873_10836.jpg'
-                                        alt=''
-                                    />
-                                </td>
-                                <td className={styles.btn_action}>
-                                    <Button
-                                        className={styles.btn_action}
-                                        variant='light'
-                                        style={{
-                                            background: "#4d9078",
-                                            color: "#FFF",
-                                        }}
-                                    >
-                                        <PiPencilSimpleLight />
-                                    </Button>
-                                    <Button
-                                        className={styles.btn_action}
-                                        variant='light'
-                                        style={{
-                                            background: "#f78154 ",
-                                            color: "#FFF",
-                                        }}
-                                    >
-                                        <PiTrash />
-                                    </Button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Maçã Fuji</td>
-                                <td>Alimentos (frutas)</td>
-                                <td>R$ 0,57</td>
-                                <td>300</td>
-                                <td>
-                                    <img
-                                        src='https://domolivio.vtexassets.com/unsafe/fit-in/720x720/center/middle/https%3A%2F%2Fdomolivio.vtexassets.com%2Farquivos%2Fids%2F344080%2FMaca-Fuji-Kg.jpg%3Fv%3D638388794024500000'
-                                        alt=''
-                                    />
-                                </td>
-                                <td className={styles.btn_action}>
-                                    <Button
-                                        className={styles.btn_action}
-                                        variant='light'
-                                        style={{
-                                            background: "#4d9078",
-                                            color: "#FFF",
-                                        }}
-                                    >
-                                        <PiPencilSimpleLight />
-                                    </Button>
-                                    <Button
-                                        className={styles.btn_action}
-                                        variant='light'
-                                        style={{
-                                            background: "#f78154 ",
-                                            color: "#FFF",
-                                        }}
-                                    >
-                                        <PiTrash />
-                                    </Button>
-                                </td>
-                            </tr>
+                            {products &&
+                                products.map((product) => (
+                                    <tr key={product.id}>
+                                        <td>{product.id}</td>
+                                        <td>{product.product}</td>
+                                        <td>{product.category}</td>
+                                        <td>{product.unitary_value}</td>
+                                        <td>{product.available_quantity}</td>
+
+                                        <td>
+                                            <Button
+                                                className={styles.btn_action}
+                                                variant='light'
+                                                style={{
+                                                    background: "#f78154 ",
+                                                    color: "#FFF",
+                                                }}
+                                            >
+                                                <PiTrash />
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                ))}
                         </tbody>
                     </Table>
                 </Col>

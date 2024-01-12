@@ -19,13 +19,13 @@ class OrderController
         return Order::create($data);
     }
 
-    public static function update(array $dice)
+    public static function update(array $data)
     {
-        return Order::update($dice);
+        return Order::update($data);
     }
 
-    public static function destroy(array $dice)
+    public static function destroy(array $data)
     {
-        return Order::delete($dice);
+        return Order::delete($data);
     }
 }

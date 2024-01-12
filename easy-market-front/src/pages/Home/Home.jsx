@@ -10,7 +10,7 @@ import { GiCardboardBoxClosed } from "react-icons/gi";
 import { TbZoomMoney } from "react-icons/tb";
 
 import styles from "./Home.module.css";
-import SalesChart from "../../components/SalesChart/SalesChart";
+import OrderChart from "../../components/OrderChart/OrderChart";
 import { Link } from "react-router-dom";
 
 const Home = () => {
@@ -21,7 +21,7 @@ const Home = () => {
                     <div className='p-2'>
                         <Row>
                             <Col>
-                                <Link to='/sale/new'>
+                                <Link to='/order/new'>
                                     <Card bg='light' className={styles.card}>
                                         <Card.Body>
                                             <Card.Title
@@ -37,7 +37,7 @@ const Home = () => {
                                                         }}
                                                         md={6}
                                                     >
-                                                        Vendas realizadas
+                                                        Registered Orders
                                                     </Col>
                                                     <Col
                                                         md={6}
@@ -56,7 +56,7 @@ const Home = () => {
                                             <Card.Footer
                                                 className={styles.card_footer}
                                             >
-                                                VENDAS +
+                                                ORDER +
                                             </Card.Footer>
                                         </Card.Body>
                                     </Card>
@@ -79,7 +79,7 @@ const Home = () => {
                                                         }}
                                                         md={6}
                                                     >
-                                                        Produtos cadastrados
+                                                        Registered Products
                                                     </Col>
                                                     <Col
                                                         md={6}
@@ -98,54 +98,13 @@ const Home = () => {
                                             <Card.Footer
                                                 className={styles.card_footer}
                                             >
-                                                PRODUTOS +
+                                                PRODUCT +
                                             </Card.Footer>
                                         </Card.Body>
                                     </Card>
                                 </Link>
                             </Col>
-                            <Col>
-                                <Link to='/'>
-                                    <Card bg='light' className={styles.card}>
-                                        <Card.Body>
-                                            <Card.Title
-                                                className={styles.card_title}
-                                            >
-                                                10
-                                            </Card.Title>
-                                            <Card.Text>
-                                                <Row>
-                                                    <Col
-                                                        style={{
-                                                            fontSize: "15px",
-                                                        }}
-                                                        md={6}
-                                                    >
-                                                        Parcelas Pendentes
-                                                    </Col>
-                                                    <Col
-                                                        md={6}
-                                                        style={{
-                                                            textAlign: "end",
-                                                        }}
-                                                    >
-                                                        <TbZoomMoney
-                                                            className={
-                                                                styles.card_icon
-                                                            }
-                                                        />
-                                                    </Col>
-                                                </Row>
-                                            </Card.Text>
-                                            <Card.Footer
-                                                className={styles.card_footer}
-                                            >
-                                                PARCELAS
-                                            </Card.Footer>
-                                        </Card.Body>
-                                    </Card>
-                                </Link>
-                            </Col>
+
                             <Col>
                                 <Link to='/category/new'>
                                     <Card bg='light' className={styles.card}>
@@ -163,7 +122,7 @@ const Home = () => {
                                                         }}
                                                         md={6}
                                                     >
-                                                        Categorias
+                                                        Categories
                                                     </Col>
                                                     <Col
                                                         md={6}
@@ -182,7 +141,7 @@ const Home = () => {
                                             <Card.Footer
                                                 className={styles.card_footer}
                                             >
-                                                CATEGORIAS +
+                                                CATEGORY +
                                             </Card.Footer>
                                         </Card.Body>
                                     </Card>
@@ -195,7 +154,7 @@ const Home = () => {
                             style={{ textAlign: "center" }}
                             className='mt-2 ${}'
                         >
-                            <p>Vendas do ano</p>
+                            <p>Orders</p>
                         </Col>
                         <Col
                             style={{
@@ -204,7 +163,7 @@ const Home = () => {
                                 textAlign: "center",
                             }}
                         >
-                            <SalesChart />
+                            <OrderChart />
                         </Col>
                     </div>
                 </Stack>

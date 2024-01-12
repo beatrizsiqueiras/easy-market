@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+import { AuthProvider } from "../context/AuthContext";
+
 import api from "../services/api";
 
 export const useAuthentication = () => {
@@ -57,44 +59,47 @@ export const useAuthentication = () => {
     };
 
     const login = async (data) => {
-        checkIfCancelled();
-        setLoading(true);
-        setError(false);
+        try {
+            checkIfCancelled();
+            setLoading(true);
+            setError(false);
 
-        api.post("/user.php", {
-            action: "login",
-            data: {
-                login: data.userLogin,
-                password: data.password,
-            },
-        })
-            .then((response) => {
-                let token = response.data["token"];
-                if (token) {
-                    setAuth(token);
-                }
-            })
-            .catch((err) => {
-                let systemErrorMessage =
-                    "Ocorreu um erro, por favor tente mais tarde!";
-                let errorOptions = [
-                    {
-                        error: "user-not-found",
-                        message: "Usuário não encontrado!",
-                    },
-                    {
-                        error: "wrong-password",
-                        message: "Senha incorreta, tente novamente!",
-                    },
-                ];
-                errorOptions.map((errorOption) => {
-                    if (error.message.includes(errorOption.error)) {
-                        systemErrorMessage = errorOption.message;
-                    }
-                });
-                setLoading(false);
-                setError(systemErrorMessage);
+            const response = await api.post("/user.php", {
+                action: "login",
+                data: {
+                    login: data.userLogin,
+                    password: data.password,
+                },
             });
+
+            let user = response.data;
+            let token = user.token;
+            if (token) {
+                return token;
+            }
+        } catch (error) {
+            let systemErrorMessage =
+                "Ocorreu um erro, por favor tente mais tarde!";
+            let errorOptions = [
+                {
+                    error: "user-not-found",
+                    message: "Usuário não encontrado!",
+                },
+                {
+                    error: "wrong-password",
+                    message: "Senha incorreta, tente novamente!",
+                },
+            ];
+
+            errorOptions.forEach((errorOption) => {
+                if (error.message.includes(errorOption.error)) {
+                    systemErrorMessage = errorOption.message;
+                }
+            });
+
+            setLoading(false);
+            setError(systemErrorMessage);
+        }
     };
 
     useEffect(() => {

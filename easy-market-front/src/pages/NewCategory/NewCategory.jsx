@@ -1,42 +1,83 @@
-import React from "react";
+import { useState } from "react";
+
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { Link } from "react-router-dom";
+
+import { Link, useNavigate } from "react-router-dom";
+
+import { useInsertCategory } from "../../hooks/useInsertCategory";
 
 const NewCategory = () => {
+    const [name, setName] = useState("");
+    const [taxPercentage, setTaxPercentage] = useState("");
+    const [formError, setFormError] = useState("");
+
+    const navigate = useNavigate();
+
+    const { insertCategory } = useInsertCategory();
+
+    const handleSubmitCategory = (e) => {
+        e.preventDefault();
+        setFormError("");
+
+        if (!name || !taxPercentage) {
+            setFormError("Please, type all fields!");
+        }
+
+        if (!formError) {
+            const newCategory = {
+                name,
+                taxPercentage,
+            };
+
+            insertCategory(newCategory);
+            navigate("/categories");
+        } else {
+            return;
+        }
+    };
+
     return (
         <>
             <Container>
                 <Col md={12} className='mb-5 mt-4'>
                     <h3>
-                        <strong> Cadastro </strong> de categoria
+                        <strong> Category </strong> Registration
                     </h3>
                 </Col>
-                <Form>
+                <Form onSubmit={handleSubmitCategory}>
                     <Col>
                         <Row>
                             <Col md={6}>
                                 <Form.Group className='mb-3'>
-                                    <Form.Label>Nome</Form.Label>
+                                    <Form.Label>Name</Form.Label>
                                     <Form.Control
                                         type='input'
-                                        placeholder='Informe o nome da categoria'
+                                        placeholder='Type the name'
                                         name='name'
+                                        required
+                                        onChange={(e) =>
+                                            setName(e.target.value)
+                                        }
+                                        value={name}
                                     />
                                 </Form.Group>
                             </Col>
                             <Col md={6}>
                                 <Form.Group className='mb-3'>
-                                    <Form.Label>
-                                        Percentual de imposto
-                                    </Form.Label>
+                                    <Form.Label>Tax Percentage</Form.Label>
                                     <Form.Control
-                                        type='input'
-                                        placeholder='Informe o percentual'
-                                        name='name'
+                                        type='number'
+                                        placeholder='Type the percentage'
+                                        name='taxPercentage'
+                                        required
+                                        onChange={(e) =>
+                                            setTaxPercentage(e.target.value)
+                                        }
+                                        value={taxPercentage}
                                     />
                                 </Form.Group>
                             </Col>
@@ -47,10 +88,10 @@ const NewCategory = () => {
                                     className='btn btn-light'
                                     style={{ margin: " 0 15px" }}
                                 >
-                                    Voltar
+                                    Back
                                 </Link>
                                 <Button variant='success' type='submit'>
-                                    Adicionar
+                                    Register
                                 </Button>
                             </Col>
                         </Row>

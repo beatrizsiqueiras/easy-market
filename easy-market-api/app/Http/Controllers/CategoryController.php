@@ -19,13 +19,13 @@ class CategoryController
         return Category::create($data);
     }
 
-    public static function update(array $dice)
+    public static function update(array $data)
     {
-        return Category::update($dice);
+        return Category::update($data);
     }
 
-    public static function destroy(array $dice)
+    public static function destroy(array $data)
     {
-        return Category::delete($dice);
+        return Category::delete($data);
     }
 }

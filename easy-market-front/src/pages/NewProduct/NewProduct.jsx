@@ -1,79 +1,132 @@
-import React from "react";
+import React, { useState } from "react";
+
+import { useAuthValue } from "../../context/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
+
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { Link } from "react-router-dom";
+
+import { useInsertProduct } from "../../hooks/useInsertProduct";
+import { useFetchCategories } from "../../hooks/useFetchCategories";
 
 const NewProduct = () => {
+    const [name, setName] = useState("");
+    const [categoryId, setCategoryId] = useState("");
+    const [unitaryValue, setUnitaryValue] = useState("");
+    const [quantity, setQuantity] = useState("");
+    const [image, setImage] = useState("");
+
+    const [formError, setFormError] = useState("");
+
+    const navigate = useNavigate();
+
+    const { insertProduct } = useInsertProduct();
+    const { categories } = useFetchCategories();
+
+    const handleSubmitProduct = (e) => {
+        e.preventDefault();
+        setFormError("");
+        if (!name || !quantity || !categoryId || !unitaryValue) {
+            setFormError("Please, type all fields!");
+        }
+        if (!formError) {
+            const newProduct = {
+                name,
+                quantity,
+                categoryId,
+                unitaryValue,
+            };
+            insertProduct(newProduct);
+            navigate("/products");
+        } else {
+            return;
+        }
+    };
+
     return (
         <>
             <Container>
                 <Col md={12} className='mb-5 mt-4'>
                     <h3>
-                        <strong> Cadastro </strong> de produto
+                        Product <strong>Registration</strong>
                     </h3>
                 </Col>
-                <Form>
+                <Form onSubmit={handleSubmitProduct}>
                     <Col>
                         <Row>
                             <Col md={6}>
                                 <Form.Group className='mb-3'>
-                                    <Form.Label>Nome</Form.Label>
+                                    <Form.Label>Name</Form.Label>
                                     <Form.Control
                                         type='input'
-                                        placeholder='Informe o nome do produto'
+                                        placeholder='Type a name'
                                         name='name'
+                                        required
+                                        onChange={(e) =>
+                                            setName(e.target.value)
+                                        }
+                                        value={name}
                                     />
                                 </Form.Group>
                             </Col>
                             <Col md={6}>
                                 <Form.Group className='mb-3'>
-                                    <Form.Label>Categoria</Form.Label>
-                                    <Form.Select aria-label='Selecione a categoria'>
-                                        <option>Selecione a categoria</option>
-                                        <option value='1'>Higiene</option>
-                                        <option value='2'>Alimentos</option>
-                                        <option value='3'>Limpeza</option>
-                                        <option value='4'>Bebidas</option>
-                                        <option value='5'>Padaria</option>
-                                        <option value='6'>Frescos</option>
+                                    <Form.Label>Category</Form.Label>
+                                    <Form.Select
+                                        aria-label='Choose some category'
+                                        onChange={(e) =>
+                                            setCategoryId(e.target.value)
+                                        }
+                                        value={categoryId}
+                                        required
+                                    >
+                                        <option>Choose</option>
+                                        {categories &&
+                                            categories.map((category) => (
+                                                <option
+                                                    value={category.id}
+                                                    key={category.id}
+                                                >
+                                                    {category.name} (
+                                                    {category.tax_percentage} %)
+                                                </option>
+                                            ))}
                                     </Form.Select>
                                 </Form.Group>
                             </Col>
                             <Col md={6}>
                                 <Form.Group className='mb-3'>
-                                    <Form.Label>Valor Unitário</Form.Label>
+                                    <Form.Label>Unitary Value</Form.Label>
                                     <Form.Control
-                                        type='input'
-                                        placeholder='Informe o valor unitário'
+                                        type='number'
+                                        placeholder='Type the value'
                                         name='name'
+                                        onChange={(e) =>
+                                            setUnitaryValue(e.target.value)
+                                        }
+                                        value={unitaryValue}
+                                        required
                                     />
                                 </Form.Group>
                             </Col>
                             <Col md={6}>
                                 <Form.Group className='mb-3'>
-                                    <Form.Label>
-                                        Quantidade disponível
-                                    </Form.Label>
+                                    <Form.Label>Quantity</Form.Label>
                                     <Form.Control
                                         type='input'
-                                        placeholder='Informe a quantidade disponível'
+                                        placeholder='Type the quantity'
                                         name='name'
+                                        onChange={(e) =>
+                                            setQuantity(e.target.value)
+                                        }
+                                        value={quantity}
                                     />
                                 </Form.Group>
                             </Col>
-                            <Col md={6}>
-                                <Form.Group className='mb-3'>
-                                    <Form.Label>Imagem</Form.Label>
-                                    <Form.Control
-                                        type='file'
-                                        placeholder='Adicione uma imagem do produto'
-                                        name='name'
-                                    />
-                                </Form.Group>
-                            </Col>
+
                             <Col md={12}>
                                 <Link
                                     to='/products'
@@ -81,10 +134,10 @@ const NewProduct = () => {
                                     className='btn btn-light'
                                     style={{ margin: " 0 15px" }}
                                 >
-                                    Voltar
+                                    Back
                                 </Link>
                                 <Button variant='success' type='submit'>
-                                    Adicionar
+                                    Register
                                 </Button>
                             </Col>
                         </Row>

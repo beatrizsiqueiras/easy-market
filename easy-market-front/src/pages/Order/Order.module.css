@@ -1,4 +1,4 @@
-.add_sales_btn {
+.add_order_btn {
     color: #FFF;
     background-color: #8fb339;
     border: 0;
@@ -11,7 +11,7 @@
     justify-content: center;
 }
 
-.add_sales_div {
+.add_order_div {
     display: flex;
     justify-content: end;
 }
