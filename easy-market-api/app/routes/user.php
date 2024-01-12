@@ -22,18 +22,27 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $json_data = file_get_contents("php://input");
 
         $data = json_decode($json_data, true);
-        var_dump($data);exit;
+
         if (!$data) {
             http_response_code(400);
             echo "JSON decoding error.";
             exit;
         }
-
-        if (UserController::store($data)) {
-            http_response_code(200);
-            echo json_encode(array('message' => 'New user inserted successfully.'));
+        switch ($data["action"]) {
+            case 'create':
+                UserController::store($data['data']);
+                http_response_code(200);
+                echo json_encode(array('message' => 'New user inserted successfully.'));
+                break;
+            case 'login':
+                $access = UserController::login($data['data']);
+                echo json_encode($access);
+                http_response_code(200);
+                break;
+            default:
+                echo "method unsupported";
+                break;
         }
-
         break;
     case 'PUT':
 

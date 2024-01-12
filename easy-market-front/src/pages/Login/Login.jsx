@@ -13,7 +13,7 @@ const Login = () => {
     const [userLogin, setUserLogin] = useState("");
     const [password, setPassword] = useState("");
 
-    const { loading, login } = useAuthentication();
+    const { loading, login, error } = useAuthentication();
 
     const handleSubmitLogin = async (e) => {
         e.preventDefault();
@@ -24,20 +24,20 @@ const Login = () => {
         const logged = await login(userData);
     };
 
-    // useEffect(() => {
-    //     if (authError) {
-    //         toast.error(authError, {
-    //             position: "top-right",
-    //             autoClose: 5000,
-    //             hideProgressBar: false,
-    //             closeOnClick: true,
-    //             pauseOnHover: true,
-    //             draggable: true,
-    //             progress: undefined,
-    //             theme: "light",
-    //         });
-    //     }
-    // }, [authError]);
+    useEffect(() => {
+        if (error) {
+            toast.error(error, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        }
+    }, [error]);
 
     return (
         <Container>

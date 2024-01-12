@@ -49,6 +49,7 @@ class User
             }
 
             $data['created_at'] = date('Y-m-d H:i:s', time());
+            $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
             $inserted = pg_insert($dbConnection, "user", $data);
 
@@ -67,12 +68,12 @@ class User
         }
     }
 
-    public static function update(array $dice)
+    public static function update(array $userData)
     {
         try {
 
-            $conditions = $dice['conditions'];
-            $data = $dice['data'];
+            $conditions = $userData['conditions'];
+            $data = $userData['data'];
 
             $data['updated_at'] = date('Y-m-d H:i:s', time());
 
@@ -120,6 +121,34 @@ class User
             }
 
             return $deleted;
+        } catch (PDOException $e) {
+            echo "Erro de conexão: " . $e->getMessage();
+        } finally {
+            if ($dbConnection !== null) {
+                pg_close($dbConnection);
+            }
+        }
+    }
+
+    public static function login($data)
+    {
+        try {
+            $password = $data['password'];
+            $conditions = array("login" => $data['login']);
+            $dbConnection = Database::dbConnection();
+
+            $user = pg_select($dbConnection, 'user', $conditions)[0];
+            if (!$user) {
+                echo "user-not-found";
+                exit;
+            }
+            if (!password_verify($password, $user['password'])) {
+                echo "wrong-password";
+                exit;
+            }
+            $values = array('token' => base64_encode(random_bytes(32)));
+            pg_update($dbConnection, 'user', $values, $user);
+            return $values;
         } catch (PDOException $e) {
             echo "Erro de conexão: " . $e->getMessage();
         } finally {

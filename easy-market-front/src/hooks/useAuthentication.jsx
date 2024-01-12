@@ -4,6 +4,7 @@ import api from "../services/api";
 
 export const useAuthentication = () => {
     const [error, setError] = useState(null);
+    const [auth, setAuth] = useState(undefined);
     const [loading, setLoading] = useState(null);
     const [cancelled, setCancelled] = useState(false);
 
@@ -13,89 +14,87 @@ export const useAuthentication = () => {
         }
     }
 
-    // const createUser = async (data) => {
-    //     checkIfCancelled();
-    //     setLoading(true);
-    //     setError(null);
+    const createUser = async (data) => {
+        checkIfCancelled();
+        setLoading(true);
+        setError(null);
 
-    //     try {
-    //         useEffect(() => {
-    //             api.post("user.php", {
-    //                 name: data.name,
-    //                 login: data.login,
-    //                 password: data.password,
-    //             })
-    //                 .then((response) => setUser(response.data))
-    //                 .catch((err) => {
-    //                     console.error("ops! ocorreu um erro" + err);
-    //                 });
-    //         }, []);
+        api.post("/user.php", {
+            action: "create",
+            data: {
+                login: data.name,
+                login: data.userLogin,
+                password: data.password,
+            },
+        })
+            .then((response) => {})
+            .catch((err) => {
+                let systemErrorMessage =
+                    "Ocorreu um erro, por favor tente mais tarde!";
+                let errorOptions = [
+                    {
+                        error: "user-not-found",
+                        message: "Usuário não encontrado!",
+                    },
+                    {
+                        error: "wrong-password",
+                        message: "Senha incorreta, tente novamente!",
+                    },
+                ];
+                errorOptions.map((errorOption) => {
+                    if (error.message.includes(errorOption.error)) {
+                        systemErrorMessage = errorOption.message;
+                    }
+                });
+                setLoading(false);
+                setError(systemErrorMessage);
+            });
+    };
 
-    //         setLoading(false);
-
-    //         return user;
-    //     } catch (error) {
-    //         let systemErrorMessage =
-    //             "Ocorreu um erro, por favor tente mais tarde!";
-    //         let errorOptions = [
-    //             {
-    //                 error: "Password",
-    //                 message: "A senha precisa conter pelo menos 6 caracteres!",
-    //             },
-    //             {
-    //                 error: "email-already",
-    //                 message: "Este login já está cadastrado na plataforma!",
-    //             },
-    //         ];
-    //         errorOptions.map((errorOption) => {
-    //             if (error.message.includes(errorOption.error)) {
-    //                 systemErrorMessage = errorOption.message;
-    //             }
-    //         });
-    //         setLoading(false);
-    //         setError(systemErrorMessage);
-    //     }
-    // };
-
-    // const logout = () => {
-    //     checkIfCancelled();
-    //     signOut(auth);
-    // };
+    const logout = () => {
+        checkIfCancelled();
+        // signOut(auth);
+    };
 
     const login = async (data) => {
         checkIfCancelled();
         setLoading(true);
         setError(false);
-        try {
-            api.post("/user.php", {
+
+        api.post("/user.php", {
+            action: "login",
+            data: {
                 login: data.userLogin,
                 password: data.password,
-            })
-                .then((response) => response.data)
-                .catch((err) => {
-                    console.error("ops! ocorreu um erro" + err);
-                });
-        } catch (error) {
-            let systemErrorMessage =
-                "Ocorreu um erro, por favor tente mais tarde!";
-            let errorOptions = [
-                {
-                    error: "user-not-found",
-                    message: "Usuário não encontrado!",
-                },
-                {
-                    error: "wrong-password",
-                    message: "Senha incorreta, tente novamente!",
-                },
-            ];
-            errorOptions.map((errorOption) => {
-                if (error.message.includes(errorOption.error)) {
-                    systemErrorMessage = errorOption.message;
+            },
+        })
+            .then((response) => {
+                let token = response.data["token"];
+                if (token) {
+                    setAuth(token);
                 }
+            })
+            .catch((err) => {
+                let systemErrorMessage =
+                    "Ocorreu um erro, por favor tente mais tarde!";
+                let errorOptions = [
+                    {
+                        error: "user-not-found",
+                        message: "Usuário não encontrado!",
+                    },
+                    {
+                        error: "wrong-password",
+                        message: "Senha incorreta, tente novamente!",
+                    },
+                ];
+                errorOptions.map((errorOption) => {
+                    if (error.message.includes(errorOption.error)) {
+                        systemErrorMessage = errorOption.message;
+                    }
+                });
+                setLoading(false);
+                setError(systemErrorMessage);
             });
-            setLoading(false);
-            setError(systemErrorMessage);
-        }
     };
 
     useEffect(() => {
@@ -103,11 +102,11 @@ export const useAuthentication = () => {
     }, []);
 
     return {
-        // auth,
-        // createUser,
-        // error,
+        auth,
+        createUser,
+        error,
         loading,
-        // logout,
+        logout,
         login,
     };
 };

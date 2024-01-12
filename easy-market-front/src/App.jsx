@@ -20,15 +20,13 @@ function App() {
     const [user, setUser] = useState(null);
     const { auth } = useAuthentication();
     const loadingUser = user === undefined;
-    // useEffect(() => {
-    //     onAuthStateChanged(auth, (user) => {
-    //         setUser(user);
-    //     });
-    // }, [auth]);
+    useEffect(() => {
+        setUser(true);
+    }, [auth]);
 
-    // if (loadingUser) {
-    //     return <p>Carregando...</p>;
-    // }
+    if (loadingUser) {
+        return <p>Carregando...</p>;
+    }
     return (
         <div className='App' id='container'>
             <div id='content-wrap'>

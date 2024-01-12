@@ -19,13 +19,18 @@ class UserController
         return User::create($data);
     }
 
-    public static function update(array $dice)
+    public static function update(array $data)
     {
-        return User::update($dice);
+        return User::update($data);
     }
 
-    public static function destroy(array $dice)
+    public static function destroy(array $data)
     {
-        return User::delete($dice);
+        return User::delete($data);
+    }
+
+    public static function login(array $data)
+    {
+        return User::login($data);
     }
 }
