@@ -1,45 +1,40 @@
-import styles from "./Login.module.css";
-import { useState, useEffect } from "react";
-
-import { AuthProvider } from "../../context/AuthContext";
-
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-import { useAuthentication } from "../../hooks/useAuthentication";
-import { useNavigate } from "react-router-dom";
-
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Container from "react-bootstrap/Container";
+import { useContext, useEffect, useState } from 'react';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { AuthContext } from '../../context/AuthContext';
 
 const Login = () => {
-    const [userLogin, setUserLogin] = useState("");
-    const [password, setPassword] = useState("");
+    const [login, setLogin] = useState('');
+    const [password, setPassword] = useState('');
+
     const navigate = useNavigate();
 
-    const { login, error } = useAuthentication();
+    const { signIn, error } = useContext(AuthContext);
 
     const handleSubmitLogin = async (e) => {
         e.preventDefault();
         const userData = {
-            userLogin,
+            login,
             password,
         };
-        await login(userData);
+        await signIn(userData);
+        navigate('/');
     };
 
     useEffect(() => {
         if (error) {
             toast.error(error, {
-                position: "top-right",
+                position: 'top-right',
                 autoClose: 5000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                theme: "light",
+                theme: 'light',
             });
         }
     }, [error]);
@@ -56,9 +51,9 @@ const Login = () => {
                         type='login'
                         name='login'
                         placeholder='Informe o seu login'
-                        value={userLogin}
+                        value={login}
                         onChange={(e) => {
-                            setUserLogin(e.target.value);
+                            setLogin(e.target.value);
                         }}
                         required
                     />

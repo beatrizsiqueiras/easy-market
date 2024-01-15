@@ -1,28 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState } from 'react';
 
-import { AuthProvider } from "../context/AuthContext";
-
-import api from "../services/api";
+import api from '../services/api';
+import { useAuthValue } from '../context/AuthContext';
 
 export const useAuthentication = () => {
     const [error, setError] = useState(null);
-    const [auth, setAuth] = useState(undefined);
+    const [auth, setAuth] = useAuthValue({});
     const [loading, setLoading] = useState(null);
-    const [cancelled, setCancelled] = useState(false);
-
-    function checkIfCancelled() {
-        if (cancelled) {
-            return;
-        }
-    }
 
     const createUser = async (data) => {
-        checkIfCancelled();
         setLoading(true);
         setError(null);
 
-        api.post("/user.php", {
-            action: "create",
+        api.post('/user.php', {
+            action: 'create',
             data: {
                 login: data.name,
                 login: data.userLogin,
@@ -31,16 +22,15 @@ export const useAuthentication = () => {
         })
             .then((response) => {})
             .catch((err) => {
-                let systemErrorMessage =
-                    "Ocorreu um erro, por favor tente mais tarde!";
+                let systemErrorMessage = 'Ocorreu um erro, por favor tente mais tarde!';
                 let errorOptions = [
                     {
-                        error: "user-not-found",
-                        message: "Usuário não encontrado!",
+                        error: 'user-not-found',
+                        message: 'Usuário não encontrado!',
                     },
                     {
-                        error: "wrong-password",
-                        message: "Senha incorreta, tente novamente!",
+                        error: 'wrong-password',
+                        message: 'Senha incorreta, tente novamente!',
                     },
                 ];
                 errorOptions.map((errorOption) => {
@@ -54,40 +44,38 @@ export const useAuthentication = () => {
     };
 
     const logout = () => {
-        checkIfCancelled();
         // signOut(auth);
     };
 
     const login = async (data) => {
         try {
-            checkIfCancelled();
             setLoading(true);
             setError(false);
 
-            const response = await api.post("/user.php", {
-                action: "login",
+            const response = await api.post('/user.php', {
+                action: 'login',
                 data: {
                     login: data.userLogin,
                     password: data.password,
                 },
             });
 
-            let user = response.data;
+            let { user } = response.data;
+            
             let token = user.token;
             if (token) {
-                return token;
+                setAuth(user);
             }
         } catch (error) {
-            let systemErrorMessage =
-                "Ocorreu um erro, por favor tente mais tarde!";
+            let systemErrorMessage = 'An error ocurred!';
             let errorOptions = [
                 {
-                    error: "user-not-found",
-                    message: "Usuário não encontrado!",
+                    error: 'user-not-found',
+                    message: 'User not found!',
                 },
                 {
-                    error: "wrong-password",
-                    message: "Senha incorreta, tente novamente!",
+                    error: 'wrong-password',
+                    message: 'Wrong password, try again!',
                 },
             ];
 
@@ -101,10 +89,6 @@ export const useAuthentication = () => {
             setError(systemErrorMessage);
         }
     };
-
-    useEffect(() => {
-        return () => setCancelled(true);
-    }, []);
 
     return {
         auth,

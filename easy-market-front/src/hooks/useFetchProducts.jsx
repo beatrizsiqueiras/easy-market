@@ -1,28 +1,28 @@
-import { useState, useEffect } from "react";
-import api from "../services/api";
+import { useEffect, useState } from 'react';
+import api from '../services/api';
 
 export const useFetchProducts = () => {
     const [products, setProducts] = useState(null);
     const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(null);
+    const [isLoading, setIsLoading] = useState(null);
 
     useEffect(() => {
         const loadProducts = async () => {
-            setLoading(true);
+            setIsLoading(true);
 
             try {
-                const response = await api.get("/product.php");
-                setLoading(false);
+                const response = await api.get('/product.php');
                 setProducts(response.data);
             } catch (error) {
                 console.log(error);
                 setError(error.message);
-                setLoading(false);
+            } finally {
+                setIsLoading(false);
             }
         };
 
         loadProducts();
-    });
+    }, []);
 
-    return { products, loading, error };
+    return { products, isLoading, error };
 };

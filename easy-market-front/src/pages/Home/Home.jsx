@@ -37,7 +37,7 @@ const Home = () => {
                                                         }}
                                                         md={6}
                                                     >
-                                                        Registered Orders
+                                                        Orders
                                                     </Col>
                                                     <Col
                                                         md={6}
@@ -79,7 +79,7 @@ const Home = () => {
                                                         }}
                                                         md={6}
                                                     >
-                                                        Registered Products
+                                                        Products
                                                     </Col>
                                                     <Col
                                                         md={6}

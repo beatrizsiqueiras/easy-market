@@ -40,12 +40,14 @@ class UserController
 
             $user = pg_select($dbConnection, 'user', $conditions)[0];
 
-            if (!$user) {
-                echo "user-not-found";
+            if (empty($user)) {
+                http_response_code(400);
+                echo json_encode("user-not-found");
                 exit;
             }
             if (!password_verify($password, $user['password'])) {
-                echo "wrong-password";
+                http_response_code(400);
+                echo json_encode("wrong-password");
                 exit;
             }
 
@@ -53,7 +55,8 @@ class UserController
 
             pg_update($dbConnection, 'user', $values, $user);
 
-            return $user;
+            http_response_code(200);
+            echo json_encode($user);
         } catch (PDOException $e) {
             echo "Erro de conexão: " . $e->getMessage();
         } finally {

@@ -35,12 +35,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 echo json_encode(array('message' => 'New user inserted successfully.'));
                 break;
             case 'login':
-                $access = UserController::login($data['data']);
-                echo json_encode($access);
-                http_response_code(200);
+                UserController::login($data['data']);
                 break;
             default:
-                echo "method unsupported";
+                echo "bla";
                 break;
         }
         break;

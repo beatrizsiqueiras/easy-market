@@ -1,16 +1,12 @@
 import React, { useState } from "react";
-
-import { useAuthValue } from "../../context/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
-
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-
-import { useInsertProduct } from "../../hooks/useInsertProduct";
+import { Link, useNavigate } from "react-router-dom";
 import { useFetchCategories } from "../../hooks/useFetchCategories";
+import { useInsertProduct } from "../../hooks/useInsertProduct";
 
 const NewProduct = () => {
     const [name, setName] = useState("");

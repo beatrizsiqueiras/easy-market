@@ -22,7 +22,7 @@ export const useFetchCategories = () => {
         };
 
         loadCategories();
-    });
+    }, []);
 
     return { categories, loading, error };
 };
