@@ -27,16 +27,16 @@ class Product
             FROM PRODUCT P
             INNER JOIN CATEGORY C ON C.ID = P.CATEGORY";
 
-            $categories = pg_query($dbConnection, $sql);
+            $products = pg_query($dbConnection, $sql);
 
-            if (!$categories) {
+            if (!$products) {
                 echo "An error occurred in query execution.\n";
                 exit;
             }
 
-            $categories = pg_fetch_all($categories);
+            $products = pg_fetch_all($products);
 
-            return $categories;
+            return $products;
         } catch (PDOException $e) {
             echo "Erro de conexão: " . $e->getMessage();
         } finally {

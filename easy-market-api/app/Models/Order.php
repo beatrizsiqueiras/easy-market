@@ -11,7 +11,6 @@ class Order
     public static function all()
     {
         try {
-
             $dbConnection = Database::dbConnection();
 
             if (!$dbConnection) {
@@ -19,7 +18,15 @@ class Order
                 exit;
             }
 
-            $orders = pg_query($dbConnection, "SELECT * FROM public.order");
+            $sql = "SELECT O.ID,
+                    O.TOTAL_TAXES,
+                    O.TOTAL,
+                    TO_CHAR(O.CREATED_AT, 'DD/MM/YYYY') AS created_at_date,
+                    TO_CHAR(O.CREATED_AT, 'HH24:MI') AS created_at_time
+                FROM public.order AS O
+                WHERE O.DELETED_AT IS NULL";
+
+            $orders = pg_query($dbConnection, $sql);
 
             if (!$orders) {
                 echo "An error occurred in query execution.\n";
@@ -48,9 +55,40 @@ class Order
                 exit;
             }
 
-            $data['created_at'] = date('Y-m-d H:i:s', time());
+            $order = $data['order'];
+            $order['created_at'] = date('Y-m-d H:i:s', time());
 
-            $inserted = pg_insert($dbConnection, "order", $data);
+            $inserted = pg_insert($dbConnection, "order", $order);
+
+            $sqlOrderId = "SELECT id FROM public.order WHERE deleted_at IS NULL ORDER BY id DESC LIMIT 1";
+            $query = pg_query($dbConnection, $sqlOrderId);
+
+            $orderId = pg_fetch_all($query)[0]['id'];
+
+            $orderProducts = $data['orderProducts'];
+
+            foreach ($orderProducts as $orderProduct) {
+
+                $productId = $orderProduct['id'];
+                $quantity = $orderProduct['selectedQuantity'];
+                $createdAt = date('Y-m-d H:i:s', time());
+
+                $availableQuantity = intval($orderProduct['available_quantity']) - intval($orderProduct['selectedQuantity']);
+
+                $orderProductData = array(
+                    "product" => $productId,
+                    "order" => $orderId,
+                    "quantity" => $quantity,
+                    "created_at" => $createdAt
+                );
+
+                pg_insert($dbConnection, 'order_products', $orderProductData);
+
+                $productFieldsToBeUpdated = array("available_quantity" => $availableQuantity);
+                $productToBeUpdatedCondtions = array("id" => $productId);
+
+                pg_update($dbConnection, 'product', $productFieldsToBeUpdated, $productToBeUpdatedCondtions);
+            }
 
             if (!$inserted) {
                 echo "An error occurred in query execution.\n";
@@ -59,8 +97,10 @@ class Order
 
             return $inserted;
         } catch (PDOException $e) {
+
             echo "Connection error: " . $e->getMessage();
         } finally {
+
             if ($dbConnection !== null) {
                 pg_close($dbConnection);
             }

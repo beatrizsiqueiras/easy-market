@@ -1,28 +1,45 @@
-.products_header {
-    font-weight: bold;
-    border-bottom: 2px solid #CCC;
-}
-
-.products_row {
-    align-items: center;
-    font-size: 12px;
-}
-
-.products_row img {
-    /* width: 70px; */
-}
-
-.card {
-    max-width: 600px;
-    margin: 0 auto;
+.table_container {
+    height: 300px;
+    max-height: 300px;
     overflow-y: auto;
-    max-height: 400px;
 }
 
-.card_body {
-    padding: 5px;
-    box-sizing: border-box;
-    overflow: hidden;
+.products_table {
+    width: 100%;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+thead, tbody {
+    font-size: 14px;
+    text-align: center;
+}
+
+table tr {
+    cursor: pointer;
+
+}
+
+tr:hover {
+    border: 2px solid #ccdad1;
+    border-top: 2px solid #ccdad1;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    background-color: #f5f5f5;
+    transition: background-color 0.3s ease;
+}
+
+input {
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+    width: 50px;
 }
 
 button {
@@ -33,5 +50,5 @@ button {
     font: inherit;
     color: inherit;
     cursor: pointer;
-    outline: inherit;  
+    outline: inherit;
 }
