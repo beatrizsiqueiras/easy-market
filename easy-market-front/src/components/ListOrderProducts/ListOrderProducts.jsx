@@ -17,7 +17,7 @@ const ListOrderProducts = ({ orderId }) => {
                 </thead>
                 <tbody>
                     <PulseLoader color='#36d7b7' loading={isProductsLoading} />
-                    {!orderProducts && (
+                    {!orderProducts && !isProductsLoading && (
                         <tr>
                             <td colSpan={6}>
                                 <p style={{ textAlign: 'center', fontSize: '20px' }}>

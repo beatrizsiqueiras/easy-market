@@ -1,28 +1,27 @@
-import { useState, useEffect } from "react";
-import api from "../services/api";
+import { useState, useEffect } from 'react';
+import api from '../services/api';
 
 export const useFetchCategories = () => {
     const [categories, setCategories] = useState(null);
     const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(null);
+    const [isLoading, setIsLoading] = useState(null);
 
     useEffect(() => {
         const loadCategories = async () => {
-            setLoading(true);
+            setIsLoading(true);
 
             try {
-                const response = await api.get("/category.php");
-                setLoading(false);
+                const response = await api.get('/category.php');
                 setCategories(response.data);
             } catch (error) {
-                console.log(error);
                 setError(error.message);
-                setLoading(false);
+            } finally {
+                setIsLoading(false);
             }
         };
 
         loadCategories();
     }, []);
 
-    return { categories, loading, error };
+    return { categories, isLoading, error };
 };

@@ -1,147 +1,105 @@
 import { useEffect, useState } from 'react';
 import api from '../services/api';
 
-export const useOrderManagement = () => {
-    const [orderProducts, setOrderProducts] = useState([]);
-    const [selectedProductsIds, setSelectedProductsIds] = useState([]);
-    const [orderTaxes, setOrderTaxes] = useState(0);
-    const [totalOrder, setTotalOrder] = useState(0);
-    const [error, setError] = useState(null);
-    const [insertedOrder, setInsertedOrder] = useState(false);
-    const [totalTaxes, setTotalTaxes] = useState(0);
+export const useDashboardManagement = () => {
+    const [totalOrders, setTotalOrders] = useState(0);
+    const [totalProducts, setTotalProducts] = useState(0);
+    const [totalCategories, setTotalCategories] = useState(0);
+    const [ordersChartData, setOrdersChartData] = useState(undefined);
+    const [error, setError] = useState(0);
 
     useEffect(() => {
-        let taxes = 0;
-        let total = 0;
-        let taxValue = 0;
+        const getQuantityProducts = async () => {
+            try {
+                const response = await api.get('/dashboard.php', {
+                    params: {
+                        action: 'products',
+                    },
+                });
 
-        orderProducts.forEach((product) => {
-            taxValue += calculateTotalAmoutOfTaxes(product);
-            taxes += calculateProductsTotalTaxAmount(product);
-            total += parseFloat(product.subtotal);
-        });
-
-        setOrderTaxes(taxes.toFixed(2));
-        setTotalOrder(total.toFixed(2));
-        setTotalTaxes(taxValue.toFixed(2));
-    }, [orderProducts]);
-
-    const calculateTotalAmoutOfTaxes = (product) => {
-        const taxPercentage = parseFloat(product.tax_percentage);
-        const unitaryValue = parseFloat(product.unitary_value);
-        const selectedQuantity = parseInt(product.selectedQuantity);
-
-        if (isNaN(taxPercentage) || isNaN(selectedQuantity) || isNaN(unitaryValue)) {
-            return 0;
-        }
-
-        const total = unitaryValue * (taxPercentage / 100) * selectedQuantity;
-        return total;
-    };
-
-    const calculateProductsTotalTaxAmount = (product) => {
-        const taxPercentage = parseFloat(product.tax_percentage);
-        const selectedQuantity = parseInt(product.selectedQuantity);
-
-        if (isNaN(taxPercentage) || isNaN(selectedQuantity)) {
-            return 0;
-        }
-
-        const total = taxPercentage * selectedQuantity;
-        return total;
-    };
-
-    const productSubTotalCalculator = (product, quantity) => {
-        const taxPercentage = parseFloat(product.tax_percentage);
-        const unitaryValue = parseFloat(product.unitary_value);
-        const quantityInt = parseInt(quantity);
-
-        const subtotal =
-            unitaryValue * quantityInt + unitaryValue * (taxPercentage / 100) * quantityInt;
-
-        return subtotal.toFixed(2);
-    };
-
-    const handleAddProductToOrder = (product) => {
-        const inititalQuantity = 1;
-        const initialSubtotal = productSubTotalCalculator(product, inititalQuantity);
-
-        setOrderProducts((prevOrderProducts) => [
-            ...prevOrderProducts,
-            { ...product, subtotal: initialSubtotal, selectedQuantity: inititalQuantity },
-        ]);
-        setSelectedProductsIds([...selectedProductsIds, product.id]);
-    };
-
-    const handleSubTotalValue = (product, quantity) => {
-        const subtotal = productSubTotalCalculator(product, quantity);
-
-        setOrderProducts((prevOrderProducts) => {
-            const updatedProducts = prevOrderProducts.map((prevProduct) => {
-                if (prevProduct.id === product.id) {
-                    prevProduct.subtotal = subtotal;
-                    prevProduct.selectedQuantity = quantity;
-                    return prevProduct;
+                if (response.data.error) {
+                    setError(response.data.error);
+                    return;
                 }
-                return prevProduct;
-            });
 
-            return updatedProducts;
-        });
-    };
-
-    const handleRemoveSelectedProduct = (product) => {
-        setOrderProducts((prevOrderProducts) => {
-            const updatedProducts = prevOrderProducts.filter(
-                (prevProduct) => prevProduct.id !== product.id
-            );
-            return updatedProducts;
-        });
-        setSelectedProductsIds((prevSelectedProducts) => {
-            const isProductSelected = prevSelectedProducts.includes(product.id);
-
-            if (isProductSelected) {
-                const updatedProducts = prevSelectedProducts.filter(
-                    (selectedProductId) => selectedProductId !== product.id
-                );
-                return updatedProducts;
+                setTotalProducts(response.data);
+            } catch (error) {
+                setError(error);
             }
-        });
-    };
+        };
+        getQuantityProducts();
+    }, []);
 
-    const handleSubmitOrder = async () => {
-        try {
-            const response = await api.post('/order.php', {
-                orderProducts,
-                order: {
-                    total: totalOrder,
-                    total_taxes: totalTaxes,
-                    taxes: orderTaxes,
-                },
-            });
+    useEffect(() => {
+        const getQuantityOrders = async () => {
+            try {
+                const response = await api.get('/dashboard.php', {
+                    params: {
+                        action: 'orders',
+                    },
+                });
 
-            if (response.data.error) {
-                setError(response.data.error);
-                return;
+                if (response.data.error) {
+                    setError(response.data.error);
+                    return;
+                }
+
+                setTotalOrders(response.data);
+            } catch (error) {
+                setError(error);
             }
+        };
+        getQuantityOrders();
+    }, []);
 
-            setInsertedOrder(true);
-        } catch (error) {
-            setError(error);
-        }
-    };
+    useEffect(() => {
+        const getQuantityCategories = async () => {
+            try {
+                const response = await api.get('/dashboard.php', {
+                    params: {
+                        action: 'categories',
+                    },
+                });
+
+                if (response.data.error) {
+                    setError(response.data.error);
+                    return;
+                }
+
+                setTotalCategories(response.data);
+            } catch (error) {
+                setError(error);
+            }
+        };
+        getQuantityCategories();
+    }, []);
+
+    useEffect(() => {
+        const getOrdersChartData = async () => {
+            try {
+                const response = await api.get('/dashboard.php', {
+                    params: {
+                        action: 'orderChart',
+                    },
+                });
+
+                if (response.data.error) {
+                    setError(response.data.error);
+                    return;
+                }
+
+                setOrdersChartData(response.data);
+            } catch (error) {
+                setError(error);
+            }
+        };
+        getOrdersChartData();
+    }, []);
 
     return {
-        orderProducts,
-        selectedProductsIds,
-        totalOrder,
-        orderTaxes,
-        error,
-        insertedOrder,
-        totalTaxes,
-        handleAddProductToOrder,
-        handleSubTotalValue,
-        handleRemoveSelectedProduct,
-        handleSubmitOrder,
+        totalOrders,
+        totalProducts,
+        totalCategories,
+        ordersChartData,
     };
 };

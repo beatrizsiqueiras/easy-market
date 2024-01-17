@@ -41,6 +41,15 @@ const Products = () => {
                         </thead>
                         <tbody>
                             <PulseLoader color='#36d7b7' loading={isLoading} />
+                            {!products && (
+                                <tr>
+                                    <td colSpan={6}>
+                                        <p style={{ textAlign: 'center', fontSize: '20px' }}>
+                                            Any products here :/
+                                        </p>
+                                    </td>
+                                </tr>
+                            )}
                             {products &&
                                 products.map((product) => (
                                     <tr key={product.id}>
