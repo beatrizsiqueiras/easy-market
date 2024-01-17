@@ -1,7 +1,7 @@
 #Easy-market:
 
 <h2>How to use:</h2>
-<h3>Required Technologies</h3>
+<h3>Required Tools</h3>
 <p>First, it will be necessary to install the following tools on your machine:</p>
 <ul>
 <li>npm</li>
@@ -47,7 +47,7 @@ Password: <strong>123456</strong></pre>
 <hr>
 <h2>Como iniciar:</h2>
 
-<h3>Tecnologias Necessárias</h3>
+<h3>Ferramentas Necessárias</h3>
 <p>Primeiro, será necessário instalar as seguintes ferramentas em sua máquina: </p>
 <ul>
 <li>npm</li>
