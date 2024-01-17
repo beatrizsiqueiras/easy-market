@@ -41,8 +41,8 @@ const Login = () => {
 
     return (
         <Container>
-            <h1>Entrar</h1>
-            <p>Faça o login para gerenciar suas vendas!</p>
+            <h1>Log In</h1>
+            <p>Log in to manage your orders!</p>
 
             <Form onSubmit={handleSubmitLogin}>
                 <Form.Group className='mb-3' controlId='formBasiclogin'>
@@ -50,7 +50,7 @@ const Login = () => {
                     <Form.Control
                         type='login'
                         name='login'
-                        placeholder='Informe o seu login'
+                        placeholder='Type your login'
                         value={login}
                         onChange={(e) => {
                             setLogin(e.target.value);
@@ -64,7 +64,7 @@ const Login = () => {
                     <Form.Control
                         type='password'
                         name='password'
-                        placeholder='Insira sua senha'
+                        placeholder='Type your password'
                         value={password}
                         onChange={(e) => {
                             setPassword(e.target.value);
@@ -72,7 +72,7 @@ const Login = () => {
                         required
                     />
                 </Form.Group>
-                <button className='btn'>Entrar</button>
+                <button className='btn btn-success'>Entrar</button>
             </Form>
 
             <ToastContainer

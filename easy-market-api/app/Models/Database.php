@@ -8,8 +8,8 @@ class Database extends PDO
 {
     const HOST = 'localhost';
     const PORT = '5432';
-    const USER = 'admin';
-    const PASS = 'm4rk3t';
+    const USER = 'postgres';
+    const PASS = 'root';
     const DB_NAME = 'easy_market';
 
     private static $database;

@@ -17,10 +17,23 @@ import { NavLink } from 'react-router-dom';
 import styles from './NavbarComponent.module.css';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import Swal from 'sweetalert2';
 
 function NavbarComponent() {
     const { signed, signOut } = useContext(AuthContext);
-
+    const handleSignOut = () => {
+        Swal.fire({
+            title: 'Wait..',
+            showConfirmButton: true,
+            showCancelButton: true,
+            text: 'Do you want to log out?',
+            icon: 'question',
+        }).then(function (result) {
+            if (result.isConfirmed) {
+                signOut();
+            }
+        });
+    };
     return (
         <>
             {[false].map((expand) => (
@@ -69,7 +82,7 @@ function NavbarComponent() {
                                         title={<PiUserCircleGearThin className={styles.nav_icon} />}
                                         id={`offcanvasNavbarDropdown-expand-${expand}`}
                                     >
-                                        <NavDropdown.Item onClick={signOut}>
+                                        <NavDropdown.Item onClick={handleSignOut}>
                                             <PiSignOutThin />
                                             Sign Out
                                         </NavDropdown.Item>

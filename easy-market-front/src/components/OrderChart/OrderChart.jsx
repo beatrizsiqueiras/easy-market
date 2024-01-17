@@ -21,7 +21,7 @@ const OrderChart = ({ ordersChartData }) => {
                             backgroundColor: '#815ac0',
                             borderCapStyle: '#815ac0',
                             tension: 0.5,
-                            label: '2023 - 2024',
+                            label: '2024',
                             data: ordersChartData.map((row) => row.count),
                         },
                     ],
