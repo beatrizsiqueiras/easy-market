@@ -20,11 +20,13 @@ class Order
 
             $sql = "SELECT O.ID,
                     O.TOTAL_TAXES,
+                    o.TAXES,
                     O.TOTAL,
                     TO_CHAR(O.CREATED_AT, 'DD/MM/YYYY') AS created_at_date,
                     TO_CHAR(O.CREATED_AT, 'HH24:MI') AS created_at_time
                 FROM public.order AS O
-                WHERE O.DELETED_AT IS NULL";
+                WHERE O.DELETED_AT IS NULL
+                ORDER BY ID DESC";
 
             $orders = pg_query($dbConnection, $sql);
 

@@ -26,6 +26,7 @@ const NewOrder = () => {
         orderTaxes,
         error,
         insertedOrder,
+        totalTaxes,
         handleAddProductToOrder,
         handleSubTotalValue,
         handleRemoveSelectedProduct,
@@ -200,7 +201,7 @@ const NewOrder = () => {
             <Col md={12} className='mt-2'>
                 <Row className='justify-content-md-end'>
                     <Col sm={3}>
-                        <Card bg='light'>
+                        <Card bg='light' className={styles.card_totals}>
                             <Card.Body>
                                 <Card.Title>
                                     <Col md={12}>
@@ -209,17 +210,15 @@ const NewOrder = () => {
                                         </p>
                                     </Col>
                                 </Card.Title>
-                                <Card.Text
-                                    className='text-end'
-                                    style={{ fontSize: '40px', padding: '0' }}
-                                >
-                                    <p>{orderTaxes} %</p>
+                                <Card.Text className={styles.text_totals}>
+                                    
+                                    <p>R$ {totalTaxes} <span style={{ fontSize: '16px' }}>({orderTaxes} %)</span></p>
                                 </Card.Text>
                             </Card.Body>
                         </Card>
                     </Col>
                     <Col sm={3}>
-                        <Card bg='light'>
+                        <Card bg='light' className={styles.card_totals}>
                             <Card.Body>
                                 <Card.Title>
                                     <Col md={12}>
@@ -228,10 +227,7 @@ const NewOrder = () => {
                                         </p>
                                     </Col>
                                 </Card.Title>
-                                <Card.Text
-                                    className='text-end'
-                                    style={{ fontSize: '40px', padding: '0' }}
-                                >
+                                <Card.Text className={styles.text_totals}>
                                     <p>R$ {totalOrder}</p>
                                 </Card.Text>
                             </Card.Body>

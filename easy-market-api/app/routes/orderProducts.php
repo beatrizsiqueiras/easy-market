@@ -7,11 +7,7 @@ require(__DIR__ . '/../Http/cors.php');
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
-
-        $json_data = file_get_contents("php://input");
-
-        $order = json_decode($json_data, true)['order'];
-
+        $order = isset($_GET['order']) ? $_GET['order'] : null;
         if (!OrderProductsController::index($order)) {
             http_response_code(400);
             echo "JSON decoding error.";
@@ -26,7 +22,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $json_data = file_get_contents("php://input");
 
         $data = json_decode($json_data, true);
-        
+
         if (!$data) {
             http_response_code(400);
             echo "JSON decoding error.";

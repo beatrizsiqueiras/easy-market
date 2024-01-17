@@ -18,17 +18,28 @@ class OrderProducts
                 echo "An error occurred in custom database connection.\n";
                 exit;
             }
+            $sql = "SELECT P.ID,
+                    P.NAME,
+                    OP.QUANTITY,
+                    P.UNITARY_VALUE,
+                    C.TAX_PERCENTAGE
+                FROM ORDER_PRODUCTS AS OP
+                INNER JOIN PRODUCT AS P ON OP.PRODUCT = P.ID
+                INNER JOIN CATEGORY AS C ON P.CATEGORY = C.ID
+                WHERE OP.ORDER = $order
+                    AND OP.DELETED_AT IS NULL
+                    ORDER BY ID ASC";
 
-            $categories = pg_query($dbConnection, "SELECT * FROM order_products WHERE order = $order");
+            $productsOrder = pg_query($dbConnection, $sql);
 
-            if (!$categories) {
+            if (!$productsOrder) {
                 echo "An error occurred in query execution.\n";
                 exit;
             }
 
-            $categories = pg_fetch_all($categories);
+            $productsOrder = pg_fetch_all($productsOrder);
 
-            return $categories;
+            return $productsOrder;
         } catch (PDOException $e) {
             echo "Erro de conexão: " . $e->getMessage();
         } finally {

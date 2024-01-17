@@ -7,13 +7,12 @@ import Stack from "react-bootstrap/Stack";
 
 import { PiShoppingCartSimpleFill, PiListDashesFill } from "react-icons/pi";
 import { GiCardboardBoxClosed } from "react-icons/gi";
-import { TbZoomMoney } from "react-icons/tb";
 
-import styles from "./Home.module.css";
+import styles from "./Dashboard.module.css";
 import OrderChart from "../../components/OrderChart/OrderChart";
 import { Link } from "react-router-dom";
 
-const Home = () => {
+const Dashboard = () => {
     return (
         <>
             <Container>
@@ -172,4 +171,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Dashboard;

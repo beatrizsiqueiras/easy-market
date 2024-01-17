@@ -5,7 +5,7 @@ import Footer from './components/Footer/Footer';
 import NavbarComponent from './components/Navbar/NavbarComponent';
 import { AuthContext } from './context/AuthContext';
 import Categories from './pages/Categories/Categories';
-import Home from './pages/Home/Home';
+import Dashboard from './pages/Dashboard/Dashboard';
 import Login from './pages/Login/Login';
 import NewCategory from './pages/NewCategory/NewCategory';
 import NewOrder from './pages/NewOrder/NewOrder';
@@ -24,7 +24,7 @@ function App() {
                     <Routes>
                         <Route
                             path='/'
-                            element={signed ? <Home /> : <Navigate to='/login' />}
+                            element={signed ? <Dashboard /> : <Navigate to='/login' />}
                         ></Route>
                         <Route
                             path='/products'

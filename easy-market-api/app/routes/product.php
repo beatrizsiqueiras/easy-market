@@ -8,11 +8,15 @@ require(__DIR__ . '/../Http/cors.php');
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
-        $products = json_encode(ProductController::index());
 
+        if (!ProductController::index()) {
+            http_response_code(400);
+            echo "JSON decoding error.";
+            exit;
+        }
         http_response_code(200);
+        echo json_encode(ProductController::index());
 
-        echo $products;
         break;
 
     case 'POST':
