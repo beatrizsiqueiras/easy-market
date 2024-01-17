@@ -67,7 +67,6 @@ const NewOrder = () => {
                     New <strong>Order</strong>
                 </h2>
             </Col>
-
             <Col md={12}>
                 <Row>
                     <Col md={6}>
@@ -144,6 +143,7 @@ const NewOrder = () => {
                                                 <th>Un. Value</th>
                                                 <th>Tax</th>
                                                 <th>Quantity</th>
+                                                <th>Total Taxes</th>
                                                 <th>Subtotal</th>
                                                 <th></th>
                                             </tr>
@@ -155,7 +155,7 @@ const NewOrder = () => {
                                                         <td>{product.id}</td>
                                                         <td>{product.product}</td>
                                                         <td>{product.category}</td>
-                                                        <td>{product.unitary_value}</td>
+                                                        <td>R$ {product.unitary_value}</td>
                                                         <td>{product.tax_percentage}%</td>
                                                         <td>
                                                             <input
@@ -172,7 +172,8 @@ const NewOrder = () => {
                                                                 }}
                                                             ></input>
                                                         </td>
-                                                        <td>{product.subtotal}</td>
+                                                        <td>R$ {product.totalTaxesProduct}</td>
+                                                        <td>R$ {product.subtotal}</td>
                                                         <td>
                                                             <button
                                                                 onClick={() => {
@@ -199,7 +200,7 @@ const NewOrder = () => {
                 </Row>
             </Col>
             <Col md={12} className='mt-2'>
-                <Row className='justify-content-md-end'>
+                <Row className='d-flex justify-content-end'>
                     <Col sm={3}>
                         <Card bg='light' className={styles.card_totals}>
                             <Card.Body>
@@ -211,8 +212,10 @@ const NewOrder = () => {
                                     </Col>
                                 </Card.Title>
                                 <Card.Text className={styles.text_totals}>
-                                    
-                                    <p>R$ {totalTaxes} <span style={{ fontSize: '16px' }}>({orderTaxes} %)</span></p>
+                                    <p>
+                                        R$ {totalTaxes}{' '}
+                                        <span style={{ fontSize: '16px' }}>({orderTaxes} %)</span>
+                                    </p>
                                 </Card.Text>
                             </Card.Body>
                         </Card>
@@ -235,7 +238,7 @@ const NewOrder = () => {
                     </Col>
                 </Row>
             </Col>
-            <Col md={12} className='mt-2'>
+            <Col md={12} className='mt-3'>
                 <Col className='d-flex justify-content-end'>
                     <Button
                         style={{ backgroundColor: '#7cb518', border: '0' }}

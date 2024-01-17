@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import api from '../services/api';
+import { PiArrowSquareInLight } from 'react-icons/pi';
 
 export const useOrderManagement = () => {
     const [orderProducts, setOrderProducts] = useState([]);
@@ -64,11 +65,21 @@ export const useOrderManagement = () => {
 
     const handleAddProductToOrder = (product) => {
         const inititalQuantity = 1;
+        const initialTotalTaxesProduct = (
+            parseFloat(product.unitary_value) *
+            (parseFloat(product.tax_percentage) / 100) *
+            inititalQuantity
+        ).toFixed(2);
         const initialSubtotal = productSubTotalCalculator(product, inititalQuantity);
 
         setOrderProducts((prevOrderProducts) => [
             ...prevOrderProducts,
-            { ...product, subtotal: initialSubtotal, selectedQuantity: inititalQuantity },
+            {
+                ...product,
+                subtotal: initialSubtotal,
+                selectedQuantity: inititalQuantity,
+                totalTaxesProduct: initialTotalTaxesProduct,
+            },
         ]);
         setSelectedProductsIds([...selectedProductsIds, product.id]);
     };
@@ -80,6 +91,11 @@ export const useOrderManagement = () => {
             const updatedProducts = prevOrderProducts.map((prevProduct) => {
                 if (prevProduct.id === product.id) {
                     prevProduct.subtotal = subtotal;
+                    prevProduct.totalTaxesProduct = (
+                        parseFloat(product.unitary_value) *
+                        (parseFloat(product.tax_percentage) / 100) *
+                        parseInt(quantity)
+                    ).toFixed(2);
                     prevProduct.selectedQuantity = quantity;
                     return prevProduct;
                 }

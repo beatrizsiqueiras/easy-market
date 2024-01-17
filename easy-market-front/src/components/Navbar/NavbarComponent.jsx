@@ -2,6 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Navbar from 'react-bootstrap/Navbar';
+import Col from 'react-bootstrap/Col';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { BsShop } from 'react-icons/bs';
 import {
@@ -76,13 +77,15 @@ function NavbarComponent() {
                                 </Nav>
                             </Offcanvas.Body>
                         </Navbar.Offcanvas>
-                        <Navbar.Brand id={styles.nav_title}>
-                            <NavLink to='/'>
-                                <BsShop className={styles.nav_icon} />
-                                <strong>Easy</strong>
-                                Market
-                            </NavLink>
-                        </Navbar.Brand>
+                        <Col className='d-flex justify-content-center'>
+                            <Navbar.Brand id={styles.nav_title}>
+                                <NavLink to='/'>
+                                    <BsShop className={styles.nav_icon} />
+                                    <strong>Easy</strong>
+                                    Market
+                                </NavLink>
+                            </Navbar.Brand>
+                        </Col>
                     </Container>
                 </Navbar>
             ))}
