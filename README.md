@@ -2,7 +2,7 @@
 
 <h2>How to use:</h2>
 <h3>Required Technologies</h3>
-<p>First, you will need to install the following technologies on your machine</p>
+<p>First, it will be necessary to install the following tools on your machine:</p>
 <ul>
 <li>npm</li>
 <li>PHP 8.2</li>
@@ -14,8 +14,9 @@
  <pre>git clone https://github.com/beatrizsiqueiras/easy-market.git
 </pre>
 </li>
-<li>Perform the database dump with the command:</li>
-<br>
+</ul>
+<h5>To perform the database dump, follow the steps below:</h5>
+<ul>
 <li>If you use the pgAdmin DBMS, the default user is
 <pre> user: <strong>postgres</strong>
 </pre>and the password is 
@@ -40,13 +41,14 @@
 </ul>
 <p>Done, after this, you will have access to the system.</p>
 <pre>
+Access link: <strong>http://localhost:3000/</strong>
 Login: <strong>admin</strong>
 Password: <strong>123456</strong></pre>
 <hr>
 <h2>Como iniciar:</h2>
 
 <h3>Tecnologias Necessárias</h3>
-<p>Primeiro, será necessário instalar as seguintes tecnologias em sua máquina: </p>
+<p>Primeiro, será necessário instalar as seguintes ferramentas em sua máquina: </p>
 <ul>
 <li>npm</li>
 <li>PHP 8.2</li>
@@ -57,8 +59,9 @@ Password: <strong>123456</strong></pre>
 <ul>
 <li>Clone este repositório em seu ambiente de desenvolvimento: <pre>git clone https://github.com/beatrizsiqueiras/easy-market.git
 </pre></li>
-<li>Realize o dump do banco de dados com o comando:</li>
-<br>
+</ul>
+<h5>Para realizar o dump do banco de dados, siga os seguintes passos:</h5>
+<ul>
 <li>Se você usa o SGBD pgAdmin, o usuário padrão é 
 <pre> user: <strong>postgres</strong>
 </pre>and the password is
@@ -84,7 +87,8 @@ comando: <pre>npm start</pre> </li>
 <li>Abra outra página do terminal e entre na pasta <pre>cd easy-market-api</pre> e dê o comando: <pre>php -S localhost:8080</pre> </li>
 
 </ul>
-<p>Pronto, após isso, poderá ter acesso ao sistema</p>
+<p>Pronto, após isso, poderá ter acesso ao sistema:</p>
 <pre>
+Link de acesso: <strong>http://localhost:3000/</strong>
 Login: <strong>admin</strong>
 Senha: <strong>123456</strong></pre>
