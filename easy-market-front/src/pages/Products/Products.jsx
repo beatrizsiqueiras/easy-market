@@ -1,4 +1,3 @@
-import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -15,6 +14,7 @@ import { useDeleteProduct } from '../../hooks/useDeleteProduct';
 
 const Products = () => {
     const { products, isLoading } = useFetchProducts();
+
     const { deleteProduct } = useDeleteProduct();
 
     const navigate = useNavigate();
