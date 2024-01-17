@@ -19,7 +19,7 @@ class User
                 exit;
             }
 
-            $users = pg_query($dbConnection, "SELECT * FROM user");
+            $users = pg_query($dbConnection, "SELECT * FROM user WHERE DELETED_AT IS NULL");
 
             if (!$users) {
                 echo "An error occurred in query execution.\n";
@@ -129,5 +129,4 @@ class User
             }
         }
     }
-
 }

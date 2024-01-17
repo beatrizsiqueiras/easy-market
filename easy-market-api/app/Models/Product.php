@@ -25,7 +25,8 @@ class Product
                 C.NAME AS CATEGORY,
                 C.TAX_PERCENTAGE
             FROM PRODUCT P
-            INNER JOIN CATEGORY C ON C.ID = P.CATEGORY";
+            INNER JOIN CATEGORY C ON C.ID = P.CATEGORY
+            WHERE P.DELETED_AT IS NULL";
 
             $products = pg_query($dbConnection, $sql);
 

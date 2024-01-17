@@ -6,16 +6,24 @@ import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import { TbShoppingCartPlus } from 'react-icons/tb';
 import { PiTrash } from 'react-icons/pi';
-import styles from './Order.module.css';
+import styles from './Orders.module.css';
 import { Link } from 'react-router-dom';
 import { useFetchOrders } from '../../hooks/useFetchOrders';
 import PulseLoader from 'react-spinners/ClipLoader';
 import ModalListProducts from '../../components/Modal/ModalListProducts';
+import { useDeleteOrder } from '../../hooks/useDeleteOrder';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
-const Order = () => {
+const Orders = () => {
+    const navigate = useNavigate();
+
     const { orders, isLoading } = useFetchOrders();
 
+    const { deleteOrder } = useDeleteOrder();
+
     const [showModalProducts, setShowModalProducts] = useState(false);
+
     const [orderIdTemporary, setOrderIdTemporary] = useState(null);
 
     const handleClose = () => setShowModalProducts(false);
@@ -23,6 +31,33 @@ const Order = () => {
     const handleShowModalOrderProducts = (id) => {
         setOrderIdTemporary(id);
         setShowModalProducts(true);
+    };
+
+    const handleDeleteOrder = (id) => {
+        Swal.fire({
+            title: 'Wait..',
+            timer: 4000,
+            showConfirmButton: true,
+            showCancelButton: true,
+            text: 'Do you want to delete?',
+            icon: 'info',
+        }).then(function (result) {
+            if (result.isConfirmed) {
+                deleteOrder(id);
+
+                Swal.fire({
+                    title: 'Success',
+                    timer: 2000,
+                    text: 'Order deleted successfully',
+                    icon: 'success',
+                    showConfirmButton: true,
+                }).then(function (result) {
+                    if (result.isConfirmed) {
+                        navigate('/orders');
+                    }
+                });
+            }
+        });
     };
 
     return (
@@ -69,7 +104,7 @@ const Order = () => {
                                                 onClick={() => {
                                                     handleShowModalOrderProducts(order.id);
                                                 }}
-                                                variant='light'
+                                                className={styles.see_products_btn}
                                             >
                                                 See products
                                             </Button>
@@ -87,6 +122,9 @@ const Order = () => {
                                                 style={{
                                                     background: '#f78154 ',
                                                     color: '#FFF',
+                                                }}
+                                                onClick={() => {
+                                                    handleDeleteOrder(order.id);
                                                 }}
                                             >
                                                 <PiTrash />
@@ -109,4 +147,4 @@ const Order = () => {
     );
 };
 
-export default Order;
+export default Orders;

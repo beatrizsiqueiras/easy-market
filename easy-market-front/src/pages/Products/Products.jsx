@@ -6,13 +6,45 @@ import Row from 'react-bootstrap/Row';
 import Table from 'react-bootstrap/Table';
 import { PiTrash } from 'react-icons/pi';
 import { TbCubePlus } from 'react-icons/tb';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PulseLoader from 'react-spinners/ClipLoader';
 import { useFetchProducts } from '../../hooks/useFetchProducts';
 import styles from './Products.module.css';
+import Swal from 'sweetalert2';
+import { useDeleteProduct } from '../../hooks/useDeleteProduct';
 
 const Products = () => {
     const { products, isLoading } = useFetchProducts();
+    const { deleteProduct } = useDeleteProduct();
+
+    const navigate = useNavigate();
+
+    const handleDeleteProduct = (id) => {
+        Swal.fire({
+            title: 'Wait..',
+            timer: 4000,
+            showConfirmButton: true,
+            showCancelButton: true,
+            text: 'Do you want to delete?',
+            icon: 'info',
+        }).then(function (result) {
+            if (result.isConfirmed) {
+                deleteProduct(id);
+
+                Swal.fire({
+                    title: 'Success',
+                    timer: 2000,
+                    text: 'Product deleted successfully',
+                    icon: 'success',
+                    showConfirmButton: true,
+                }).then(function (result) {
+                    if (result.isConfirmed) {
+                        navigate('/products');
+                    }
+                });
+            }
+        });
+    };
 
     return (
         <div>
@@ -66,6 +98,9 @@ const Products = () => {
                                                 style={{
                                                     background: '#f78154 ',
                                                     color: '#FFF',
+                                                }}
+                                                onClick={() => {
+                                                    handleDeleteProduct(product.id);
                                                 }}
                                             >
                                                 <PiTrash />

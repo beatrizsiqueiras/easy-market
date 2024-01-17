@@ -15,7 +15,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
         http_response_code(200);
         echo json_encode(CategoryController::index());
-        
+
         break;
     case 'POST':
 
@@ -55,16 +55,16 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
     case 'DELETE':
 
-        $json_data = file_get_contents("php://input");
-        $data = json_decode($json_data, true);
-
-        if (!$data) {
+        $id = isset($_GET['id']) ? $_GET['id'] : null;
+        if (!$id) {
             http_response_code(400);
             echo json_encode(array('mensagem' => 'JSON decoding error.'));
             exit;
         }
 
-        if (CategoryController::destroy($data)) {
+        $categoryId = array('id' => $id);
+
+        if (CategoryController::destroy($categoryId)) {
             http_response_code(200);
             echo json_encode(array('mensagem' => 'Category deleted successfully.'));
         }

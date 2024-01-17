@@ -18,7 +18,7 @@ class Category
                 exit;
             }
 
-            $categories = pg_query($dbConnection, "SELECT * FROM category");
+            $categories = pg_query($dbConnection, "SELECT * FROM category WHERE deleted_at IS NULL");
 
             if (!$categories) {
                 echo "An error occurred in query execution.\n";

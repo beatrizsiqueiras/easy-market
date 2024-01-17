@@ -9,12 +9,44 @@ import PulseLoader from 'react-spinners/ClipLoader';
 import { MdFormatListBulletedAdd } from 'react-icons/md';
 import { PiTrash } from 'react-icons/pi';
 import styles from './Categories.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFetchCategories } from '../../hooks/useFetchCategories';
+import { useDeleteCategory } from '../../hooks/useDeleteCategory';
+import Swal from 'sweetalert2';
 
 const Categories = () => {
     const { categories, isLoading } = useFetchCategories();
 
+    const { deleteCategory } = useDeleteCategory();
+
+    const navigate = useNavigate();
+
+    const handleDeleteCategory = (id) => {
+        Swal.fire({
+            title: 'Wait..',
+            timer: 4000,
+            showConfirmButton: true,
+            showCancelButton: true,
+            text: 'Do you want to delete?',
+            icon: 'info',
+        }).then(function (result) {
+            if (result.isConfirmed) {
+                deleteCategory(id);
+
+                Swal.fire({
+                    title: 'Success',
+                    timer: 2000,
+                    text: 'Category deleted successfully',
+                    icon: 'success',
+                    showConfirmButton: true,
+                }).then(function (result) {
+                    if (result.isConfirmed) {
+                        navigate('/categories');
+                    }
+                });
+            }
+        });
+    };
     return (
         <div>
             <Container>
@@ -62,6 +94,9 @@ const Categories = () => {
                                                 style={{
                                                     background: '#f78154 ',
                                                     color: '#FFF',
+                                                }}
+                                                onClick={() => {
+                                                    handleDeleteCategory(category.id);
                                                 }}
                                             >
                                                 <PiTrash />

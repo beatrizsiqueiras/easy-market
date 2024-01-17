@@ -31,3 +31,13 @@ thead {
 img {
     width: 50px;
 }
+
+.see_products_btn {
+    border: 0;
+    background-color: #a5a5a5;
+}
+
+.see_products_btn:hover {
+    border: 0;
+    background-color: #1b4965;
+}

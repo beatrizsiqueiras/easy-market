@@ -10,7 +10,7 @@ import Login from './pages/Login/Login';
 import NewCategory from './pages/NewCategory/NewCategory';
 import NewOrder from './pages/NewOrder/NewOrder';
 import NewProduct from './pages/NewProduct/NewProduct';
-import Order from './pages/Order/Order';
+import Orders from './pages/Orders/Orders';
 import Products from './pages/Products/Products';
 
 function App() {
@@ -43,8 +43,8 @@ function App() {
                             element={signed ? <NewCategory /> : <Navigate to='/login' />}
                         ></Route>
                         <Route
-                            path='/order'
-                            element={signed ? <Order /> : <Navigate to='/login' />}
+                            path='/orders'
+                            element={signed ? <Orders /> : <Navigate to='/login' />}
                         ></Route>
                         <Route
                             path='/order/new'

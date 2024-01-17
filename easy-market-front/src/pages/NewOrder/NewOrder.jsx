@@ -55,7 +55,7 @@ const NewOrder = () => {
                 text: 'New order inserted successfully',
                 icon: 'success',
             }).then(function () {
-                navigate('/order');
+                navigate('/orders');
             });
         }
     }, [insertedOrder]);

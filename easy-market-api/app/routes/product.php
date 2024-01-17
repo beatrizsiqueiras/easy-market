@@ -58,17 +58,18 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
 
     case 'DELETE':
-        $json_data = file_get_contents("php://input");
-        $data = json_decode($json_data, true);
 
-        if (!$data) {
+        $id = isset($_GET['id']) ? $_GET['id'] : null;
+
+        if (!$id) {
             http_response_code(400);
-
             echo json_encode(array('mensagem' => 'JSON decoding error.'));
             exit;
         }
 
-        if (ProductController::destroy($data)) {
+        $productId = array('id' => $id);
+
+        if (ProductController::destroy($productId)) {
             http_response_code(200);
 
             echo json_encode(array('mensagem' => 'Product deleted successfully.'));

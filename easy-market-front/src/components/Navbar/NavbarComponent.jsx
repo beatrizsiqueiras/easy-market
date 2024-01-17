@@ -57,7 +57,7 @@ function NavbarComponent() {
                                         </NavLink>
                                     </Nav.Link>
                                     <Nav.Link>
-                                        <NavLink to='/order'>
+                                        <NavLink to='/orders'>
                                             <PiShoppingCartSimpleLight
                                                 className={styles.nav_icon}
                                             />

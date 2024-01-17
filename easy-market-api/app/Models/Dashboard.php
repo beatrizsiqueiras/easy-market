@@ -123,6 +123,7 @@ class Dashboard
                         COUNT(*) AS count
                     FROM
                         public.order
+                    WHERE deleted_at IS NULL
                     GROUP BY
                         TO_CHAR(created_at, 'Mon'),
                         EXTRACT(YEAR FROM created_at)
